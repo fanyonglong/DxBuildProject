@@ -166,7 +166,9 @@ npm install --save-dev gulp-iconfont [svn 转换font](https://www.npmjs.com/pack
 npm install my-engine-smith@latest --save-dev [图片合并](https://www.npmjs.com/package/gulp.spritesmith)
 npm install gulp-file-include  [html头部引入](https://www.npmjs.com/package/gulp-file-include)
 npm install --save-dev gulp-markdown [markdown转换](https://www.npmjs.com/package/gulp-markdown)
-
+npm install gulp-sort --save-dev [排序](https://www.npmjs.com/package/gulp-sort)
+npm install --save-dev gulp-notify [通知](https://www.npmjs.com/package/gulp-notify)
+npm install --save-dev gulp-each [循环文件]()
 
         gulp.src("./src/**/hello.txt")
         .pipe(rename(function (path) {
