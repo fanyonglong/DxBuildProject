@@ -1,37 +1,46 @@
 const chalk=require('chalk');
 
 function normalLog(text){ return text;}
-export function log(name,text)
+ function log(name,text)
 {
     let logParse=chalk[name]||normalLog;
     console.log(logParse(text));
 }
 
-export function red(text)
+ function red(text)
 {
     log('red',text)
 }
-export function black()
+ function black(text)
 {
     log('black',text)
 }
-export function green()
+ function green(text)
 {
     log('green',text)
 }
-export function yellow()
+ function yellow(text)
 {
     log('yellow',text)
 }
-export function blue()
+ function blue(text)
 {
     log('blue',text)
 }
-export function gray()
+ function gray(text)
 {
     log('gray',text)
 }
-export function grey()
+ function grey(text)
 {
     log('grey',text)
+}
+module.exports={
+    red,
+    black,
+    green,
+    yellow,
+    blue,
+    gray,
+    grey
 }

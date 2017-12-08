@@ -1,9 +1,10 @@
 
 const gulp=require('gulp')
 const runSequence=require('run-sequence');
-
+const smap=require('convert-source-map')
 gulp.task('default',()=>{
-    console.log('aaaaaaaaaaa');
+   
+
 })
 module.exports=function(cb)
 {

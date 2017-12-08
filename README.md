@@ -82,3 +82,131 @@ npm install --save-dev typescript  gulp-typescript
                 "target": "es5"
         }
         }
+
+#### node 插件
+npm install --save-dev del 删除文件
+npm install --save-dev chalk 颜色字体日志
+npm install --save-dev run-sequence 同步执行gulp任务
+npm install --save-dev yargs node 参数转换
+##### 文件流
+through2  操作流
+through2-filter 过滤流
+through2-map 修改流     
+npm install through2 through2-filter through2-map
+
+        fs.createReadStream('ex.txt')
+        .pipe(through2(function (chunk, enc, callback) {
+        for (var i = 0; i < chunk.length; i++)
+        if (chunk[i] == 97)
+        chunk[i] = 122 // swap 'a' for 'z' 
+
+        this.push(chunk)
+
+        callback()
+        }))
+        .pipe(fs.createWriteStream('out.txt'))
+        .on('finish', function () {
+        doSomethingSpecial()
+        })
+
+        var skip = through2(function (chunk, encoding, callback) {
+        // skip buffers longer than 100 
+        if (chunk.length < 100) this.push(chunk)
+        return callback()
+        })
+        
+
+##### glob文件
+npm i glob --save-dev  
+
+        var glob = require("glob")
+        
+        // options is optional 
+        glob("**/*.js", options, function (er, files) {
+        // files is an array of filenames. 
+        // If the `nonull` option is set, and nothing 
+        // was found, then files is ["**/*.js"] 
+        // er is an error object or null. 
+        })
+        以下字符在路径部分使用时具有特殊的魔法含义：
+
+        * 匹配单个路径部分中的0个或更多个字符
+        ? 匹配1个字符
+        [...]匹配一系列字符，与RegExp范围类似。如果范围的第一个字符是!或^然后它匹配任何不在范围内的字符。
+        !(pattern|pattern|pattern) 匹配任何不符合提供的任何模式的东西。
+        ?(pattern|pattern|pattern) 匹配提供的模式零次或一次。
+        +(pattern|pattern|pattern) 匹配一个或多个出现的模式。
+        *(a|b|c) 匹配零次或多次出现的模式
+        @(pattern|pat*|pat?erN) 完全匹配提供的模式之一
+        **如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
+
+
+##### gulp插件
+npm install --save-dev gulp-plumber [抑制错误处理](https://www.npmjs.com/package/gulp-plumber)
+npm install gulp-rename --save-dev  [文件重命名](https://www.npmjs.com/package/gulp-rename)           
+npm install --save-dev gulp-uglify  [js压缩](https://www.npmjs.com/package/gulp-uglify)
+npm install gulp-util --save-dev [工具](https://www.npmjs.com/package/gulp-util)
+npm install gulp-sourcemaps [源码地图映射](https://www.npmjs.com/package/gulp-sourcemaps)
+npm install gulp-if [条件判断](https://www.npmjs.com/package/gulp-if)
+npm install --save-dev gulp-concat [文件合并](https://www.npmjs.com/package/gulp-concat)
+npm install --save-dev gulp-autoprefixer [css 前缀](https://www.npmjs.com/package/gulp-autoprefixer)
+$ npm install --save-dev gulp-babel babel-preset-env [es6语法转换](https://www.npmjs.com/package/gulp-babel)
+npm install --save-dev gulp-imagemin [图片压缩](https://www.npmjs.com/package/gulp-imagemin)
+npm install gulp-clean-css --save-dev [css压缩](https://www.npmjs.com/package/gulp-clean-css)
+npm install --save-dev gulp-filter [文件过滤](https://www.npmjs.com/package/gulp-filter)
+npm install gulp-less [less编译](https://www.npmjs.com/package/gulp-less)
+npm install gulp-sass --save-dev [sass编译](https://www.npmjs.com/package/gulp-sass) 
+PostCSS gulp插件通过几个插件来管道CSS，但只解析CSS一次。
+npm install --save-dev gulp-postcss [解析css](https://www.npmjs.com/package/gulp-postcss)
+npm i gulp-htmlmin --save-dev [html压缩](https://www.npmjs.com/package/gulp-htmlmin)
+npm install --save-dev gulp-changed [否决不变的文件](https://www.npmjs.com/package/gulp-changed)
+npm install --save-dev gulp-zip [压缩包](https://www.npmjs.com/package/gulp-zip)
+npm install --save-dev gulp-template [underscore template](https://www.npmjs.com/package/gulp-template)
+npm install --save-dev gulp-iconfont [svn 转换font](https://www.npmjs.com/package/gulp-iconfont)
+npm install my-engine-smith@latest --save-dev [图片合并](https://www.npmjs.com/package/gulp.spritesmith)
+npm install gulp-file-include  [html头部引入](https://www.npmjs.com/package/gulp-file-include)
+npm install --save-dev gulp-markdown [markdown转换](https://www.npmjs.com/package/gulp-markdown)
+
+
+        gulp.src("./src/**/hello.txt")
+        .pipe(rename(function (path) {
+        path.dirname += "/ciao";
+        path.basename += "-goodbye";
+        path.extname = ".md"
+        }))
+        .pipe(gulp.dest("./dist"));
+
+                gulp.src("./src/main/text/hello.txt", { base: process.cwd() })
+        .pipe(rename({
+        dirname: "main/text/ciao",
+        basename: "aloha",
+        prefix: "bonjour-",
+        suffix: "-hola",
+        extname: ".md"
+        }))
+        .pipe(gulp.dest("./dist"));
+         
+         **文件过滤**
+        const gulp = require('gulp');
+        const uglify = require('gulp-uglify');
+        const filter = require('gulp-filter');
+        
+        gulp.task('default', () => {
+        // Create filter instance inside task function 
+        const f = filter(['**', '!*src/vendor'], {restore: true});
+        
+        return gulp.src('src/**/*.js')
+                // Filter a subset of the files 
+                .pipe(f)
+                // Run them through a plugin 
+                .pipe(uglify())
+                // Bring back the previously filtered out files (optional) 
+                .pipe(f.restore)
+                .pipe(gulp.dest('dist'));
+        });
+        // html 压缩
+        gulp.task('minify', function() {
+        return gulp.src('src/*.html')
+        .pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(gulp.dest('dist'));
+        });
