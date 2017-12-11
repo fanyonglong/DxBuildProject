@@ -168,7 +168,9 @@ npm install gulp-file-include  [html头部引入](https://www.npmjs.com/package/
 npm install --save-dev gulp-markdown [markdown转换](https://www.npmjs.com/package/gulp-markdown)
 npm install gulp-sort --save-dev [排序](https://www.npmjs.com/package/gulp-sort)
 npm install --save-dev gulp-notify [通知](https://www.npmjs.com/package/gulp-notify)
-npm install --save-dev gulp-each [循环文件]()
+npm install --save-dev gulp-each [循环文件](https://www.npmjs.com/package/gulp-each)
+npm install merge2 --save-dev [合并数据流](https://www.npmjs.com/package/merge2)
+
 
         gulp.src("./src/**/hello.txt")
         .pipe(rename(function (path) {

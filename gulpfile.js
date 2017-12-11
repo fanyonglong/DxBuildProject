@@ -18,7 +18,7 @@ gulp.task('default',()=>{
 
     if(argv.task=='')
     {
-        log.red(chalk.red('请输入你的任务名称'));
+        log.red('请输入你的任务名称');
         return;
     }
     log.green('开始执行构建任务');
