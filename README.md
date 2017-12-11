@@ -3,6 +3,23 @@
 ## GULP 打包编译
 ### gulp API
 
+#### glob 语法
+        “Globs”是你ls *.js在命令行中输入内容时所键入的模式，或者放在build/*一个.gitignore文件中。
+
+        在解析路径部分模式之前，支撑部分被扩展为一个集合。带括号的部分以任何数量的以逗号分隔的部分开始{和结束}。支撑部分可能包含斜线字符，所以a{/b/c,bcd}会扩展成a/b/c和abcd。
+
+        以下字符在路径部分使用时具有特殊的魔法含义：
+
+        * 匹配单个路径部分中的0个或更多个字符
+        ? 匹配1个字符
+        [...]匹配一系列字符，与RegExp范围类似。如果范围的第一个字符是!或^然后它匹配任何不在范围内的字符。
+        !(pattern|pattern|pattern) 匹配任何不符合提供的任何模式的东西。
+        ?(pattern|pattern|pattern) 匹配提供的模式零次或一次。
+        +(pattern|pattern|pattern) 匹配一个或多个出现的模式。
+        *(a|b|c) 匹配零次或多次出现的模式
+        @(pattern|pat*|pat?erN) 完全匹配提供的模式之一
+        **如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
+
 #### [gulp.src](https://www.gulpjs.com.cn/docs/api/)    
 gulp.src(globs[, options])         
 
@@ -89,10 +106,10 @@ npm install --save-dev chalk 颜色字体日志
 npm install --save-dev run-sequence 同步执行gulp任务
 npm install --save-dev yargs node 参数转换
 ##### 文件流
-through2  操作流
-through2-filter 过滤流
-through2-map 修改流     
-npm install through2 through2-filter through2-map
+npm install --save-dev through2  操作流
+npm install --save-dev through2-filter 过滤流
+npm install --save-dev through2-map 修改流     
+npm install through2 through2-filter through2-map --save-dev
 
         fs.createReadStream('ex.txt')
         .pipe(through2(function (chunk, enc, callback) {
@@ -170,7 +187,8 @@ npm install gulp-sort --save-dev [排序](https://www.npmjs.com/package/gulp-sor
 npm install --save-dev gulp-notify [通知](https://www.npmjs.com/package/gulp-notify)
 npm install --save-dev gulp-each [循环文件](https://www.npmjs.com/package/gulp-each)
 npm install merge2 --save-dev [合并数据流](https://www.npmjs.com/package/merge2)
-
+npm install gulp-open --save-dev [打开浏览器](https://www.npmjs.com/package/gulp-open)
+npm install --save-dev opn  [打开浏览器](https://www.npmjs.com/package/opn)
 
         gulp.src("./src/**/hello.txt")
         .pipe(rename(function (path) {
