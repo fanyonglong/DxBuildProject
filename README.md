@@ -189,6 +189,8 @@ npm install --save-dev gulp-each [循环文件](https://www.npmjs.com/package/gu
 npm install merge2 --save-dev [合并数据流](https://www.npmjs.com/package/merge2)
 npm install gulp-open --save-dev [打开浏览器](https://www.npmjs.com/package/gulp-open)
 npm install --save-dev opn  [打开浏览器](https://www.npmjs.com/package/opn)
+npm install --save-dev shuji [根据source map还原js](https://www.npmjs.com/package/shuji)
+
 
         gulp.src("./src/**/hello.txt")
         .pipe(rename(function (path) {
