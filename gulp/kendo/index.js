@@ -7,7 +7,6 @@ const runSequence=require('run-sequence');
 const through2=require('through2');
 const del=require('del');
 const buffer=require('buffer');
-const shuji=require('shuji');
 const sourceMap = require('source-map');
 gulp.task('clean',(cb)=>{
     del(['./dist/kendo/**','!./dist/kendo']).then((paths)=>{
@@ -15,9 +14,7 @@ gulp.task('clean',(cb)=>{
     });
 });
 gulp.task('default',['clean'],()=>{
-   
-
-        gulp.src('./assets/kendo/*.map',{base:"assets"}).pipe(gulpPlumber()).pipe(through2.obj(function(chunk, enc, callback){
+        return gulp.src('./assets/kendo/*.map',{base:"assets"}).pipe(gulpPlumber()).pipe(through2.obj(function(chunk, enc, callback){
    
            var content=  chunk.contents.toString(enc); //base64 utf-8 buffer
  

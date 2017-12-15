@@ -1,6 +1,15 @@
 "# DxBuildProject" 
 
 ## GULP 打包编译
+### 打包工具
+        Browserify
+        Duo
+        Grunt
+        Gulp
+        Jspm
+        Webpack
+        MSBuild
+        NuGet
 ### gulp API
 
 #### glob 语法
@@ -93,6 +102,8 @@ npm install html-minifier [html压缩](https://www.npmjs.com/package/html-minifi
 npm install uglify-js -g [js压缩](https://www.npmjs.com/package/uglify-js)
 npm install uglify-es -g [es6压缩](https://www.npmjs.com/package/uglify-es)
 npm install filesize [文件大小](https://www.npmjs.com/package/filesize)
+npm install source-map [js源文件映射](https://www.npmjs.com/package/source-map)
+
 
 ##### uglify 压缩参数
         代码生成器尝试输出默认可能的最短代码。如果你想美化输出，传递--beautify（-b）。或者，您可以传递控制代码输出的其他参数：
@@ -121,9 +132,10 @@ npm install filesize [文件大小](https://www.npmjs.com/package/filesize)
 
 ##### 文件流
 npm install glob-stream) [readable流](https://www.npmjs.com/package/glob-stream)
-npm install --save-dev through2  操作流
-npm install --save-dev through2-filter 过滤流
-npm install --save-dev through2-map 修改流     
+npm install through2 --save-dev  [操作流](https://www.npmjs.com/package/through2)
+npm install through2-filter --save-dev [过滤流](https://www.npmjs.com/package/through2-filter)
+npm install through2-map --save-dev [修改流](https://www.npmjs.com/package/through2-map)
+npm install merge2 --save-dev  [合并流](https://www.npmjs.com/package/merge2)
 npm install through2 through2-filter through2-map --save-dev
 
         fs.createReadStream('ex.txt')
@@ -227,6 +239,7 @@ npm install gulp-posthtml [处理html](https://www.npmjs.com/package/gulp-postht
 npm install gulp-sitemap --save-dev  [SEO优化](https://www.npmjs.com/package/gulp-sitemap)
 npm install gulp-mocha [测试](https://www.npmjs.com/package/gulp-mocha)
 npm install gulp-beautify [js美化](https://www.npmjs.com/package/gulp-beautify)
+npm install gulp-ngtemplate --save-dev [html模板转换成js模板](https://www.npmjs.com/package/gulp-ngtemplate)
 
 
         gulp.src("./src/**/hello.txt")
