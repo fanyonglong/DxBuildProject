@@ -12,23 +12,26 @@ gulp.task('clean',(cb)=>{
         cb();
     });
 });
-gulp.task('default',()=>{
+gulp.task('default',['clean'],()=>{
     
-      return gulp.src('./src/typescript/**/*.ts',{base:"src"}).pipe(ts({
+      return gulp.src('./src/typescript/**/*.ts').pipe(ts({
           //  declaration:true, // 生成相应的d.ts 生文
             target:'es5',
             noImplicitAny:true,
           //  outFile:"main.js",
-            module:"umd"
-         })).pipe(gulp.dest('./dist'));
+          module:"amd",
+          outFile: "main.js"
+         })).pipe(gulp.dest('./dist/typescript'));
+});
       
 gulp.task('default2',()=>{
     
-       var tsResult= gulp.src('./src/typescript/**/*.ts',{base:"src"}).pipe(ts({
+       var tsResult= gulp.src('./src/typescript/**/*.ts').pipe(ts({
             declaration:true, // 生成相应的d.ts 生文
             target:'es5',
             noImplicitAny:true,
           //  outFile:"main.js",
+          // out: "main.js",
             module:"umd"
          }));
          return merge([tsResult.dts.pipe(gulp.dest('./dist')),tsResult.js.pipe(gulp.dest('./dist'))]);

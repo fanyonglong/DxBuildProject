@@ -2,93 +2,95 @@
 
 ## GULP 打包编译
 ### 打包工具
-        Browserify
-        Duo
-        Grunt
-        Gulp
-        Jspm
-        Webpack
-        MSBuild
-        NuGet
+- Browserify
+- Duo
+- Grunt
+- Gulp
+- Jspm
+- Webpack
+- MSBuild
+- NuGet
 ### gulp API
 
 #### glob 语法
-        “Globs”是你ls *.js在命令行中输入内容时所键入的模式，或者放在build/*一个.gitignore文件中。
-        在解析路径部分模式之前，支撑部分被扩展为一个集合。带括号的部分以任何数量的以逗号分隔的部分开始{和结束}。支撑部分可能包含斜线字符，所以a{/b/c,bcd}会扩展成a/b/c和abcd。
-        以下字符在路径部分使用时具有特殊的魔法含义：
-        * 匹配单个路径部分中的0个或更多个字符
-        ? 匹配1个字符
-        [...]匹配一系列字符，与RegExp范围类似。如果范围的第一个字符是!或^然后它匹配任何不在范围内的字符。
-        !(pattern|pattern|pattern) 匹配任何不符合提供的任何模式的东西。
-        ?(pattern|pattern|pattern) 匹配提供的模式零次或一次。
-        +(pattern|pattern|pattern) 匹配一个或多个出现的模式。
-        *(a|b|c) 匹配零次或多次出现的模式
-        @(pattern|pat*|pat?erN) 完全匹配提供的模式之一
-        **如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
+```
+“Globs”是你ls *.js在命令行中输入内容时所键入的模式，或者放在build/*一个.gitignore文件中。
+在解析路径部分模式之前，支撑部分被扩展为一个集合。带括号的部分以任何数量的以逗号分隔的部分开始{和结束}。支撑部分可能包含斜线字符，所以a{/b/c,bcd}会扩展成a/b/c和abcd。
+以下字符在路径部分使用时具有特殊的魔法含义：
+* 匹配单个路径部分中的0个或更多个字符
+? 匹配1个字符
+[...]匹配一系列字符，与RegExp范围类似。如果范围的第一个字符是!或^然后它匹配任何不在范围内的字符。
+!(pattern|pattern|pattern) 匹配任何不符合提供的任何模式的东西。
+?(pattern|pattern|pattern) 匹配提供的模式零次或一次。
++(pattern|pattern|pattern) 匹配一个或多个出现的模式。
+*(a|b|c) 匹配零次或多次出现的模式
+@(pattern|pat*|pat?erN) 完全匹配提供的模式之一
+**如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
+ ```
 
 #### [gulp.src](https://www.gulpjs.com.cn/docs/api/)    
 gulp.src(globs[, options])         
-
-            输出（Emits）符合所提供的匹配模式（glob）或者匹配模式的数组（array of globs）的文件。 将返回一个 Vinyl files 的 stream 它可以被 piped 到别的插件中。
-            gulp.src('client/templates/*.jade')
-            .pipe(jade())
-            .pipe(minify())
-            .pipe(gulp.dest('build/minified_templates'));
-            glob 请参考 node-glob 语法 或者，你也可以直接写文件的路径。
-            globs
-            类型： String 或 Array
-            所要读取的 glob 或者包含 globs 的数组。
-            options
-            类型： Object
-            通过 glob-stream 所传递给 node-glob 的参数。
-            除了 node-glob 和 glob-stream 所支持的参数外，gulp 增加了一些额外的选项参数：
-            options.buffer
-            类型： Boolean 默认值： true
-            如果该项被设置为 false，那么将会以 stream 方式返回 file.contents 而不是文件 buffer 的形式。这在处理一些大文件的时候将会很有用。**注意：**插件可能并不会实现对 stream 的支持。
-            options.read
-            类型： Boolean 默认值： true
-            如果该项被设置为 false， 那么 file.contents 会返回空值（null），也就是并不会去读取文件。
-            options.base
-            类型： String 默认值： 将会加在 glob 之前 (请看 glob2base)
-            如, 请想像一下在一个路径为 client/js/somedir 的目录中，有一个文件叫 somefile.js ：
-
+```
+输出（Emits）符合所提供的匹配模式（glob）或者匹配模式的数组（array of globs）的文件。 将返回一个 Vinyl files 的 stream 它可以被 piped 到别的插件中。
+gulp.src('client/templates/*.jade')
+.pipe(jade())
+.pipe(minify())
+.pipe(gulp.dest('build/minified_templates'));
+glob 请参考 node-glob 语法 或者，你也可以直接写文件的路径。
+globs
+类型： String 或 Array
+所要读取的 glob 或者包含 globs 的数组。
+options
+类型： Object
+通过 glob-stream 所传递给 node-glob 的参数。
+除了 node-glob 和 glob-stream 所支持的参数外，gulp 增加了一些额外的选项参数：
+options.buffer
+类型： Boolean 默认值： true
+如果该项被设置为 false，那么将会以 stream 方式返回 file.contents 而不是文件 buffer 的形式。这在处理一些大文件的时候将会很有用。**注意：**插件可能并不会实现对 stream 的支持。
+options.read
+类型： Boolean 默认值： true
+如果该项被设置为 false， 那么 file.contents 会返回空值（null），也就是并不会去读取文件。
+options.base
+类型： String 默认值： 将会加在 glob 之前 (请看 glob2base)
+如, 请想像一下在一个路径为 client/js/somedir 的目录中，有一个文件叫 somefile.js ：
+```
 
 #### gulp.dest 
 gulp.dest(path[, options])
+```
+能被 pipe 进来，并且将会写文件。并且重新输出（emits）所有数据，因此你可以将它 pipe 到多个文件夹。如果某文件夹不存在，将会自动创建它。
 
-        能被 pipe 进来，并且将会写文件。并且重新输出（emits）所有数据，因此你可以将它 pipe 到多个文件夹。如果某文件夹不存在，将会自动创建它。
-
-        gulp.src('./client/templates/*.jade')
-        .pipe(jade())
-        .pipe(gulp.dest('./build/templates'))
-        .pipe(minify())
-        .pipe(gulp.dest('./build/minified_templates'));
-        文件被写入的路径是以所给的相对路径根据所给的目标目录计算而来。类似的，相对路径也可以根据所给的 base 来计算。 请查看上述的 gulp.src 来了解更多信息。
-        path
-        类型： String or Function
-        文件将被写入的路径（输出目录）。也可以传入一个函数，在函数中返回相应路径，这个函数也可以由 vinyl 文件实例 来提供。
-        options
-        类型： Object
-        options.cwd
-        类型： String 默认值： process.cwd()
-        输出目录的 cwd 参数，只在所给的输出目录是相对路径时候有效。
-        options.mode
-        类型： String 默认值： 0777
-        八进制权限字符，用以定义所有在输出目录中所创建的目录的权限。
-
+gulp.src('./client/templates/*.jade')
+.pipe(jade())
+.pipe(gulp.dest('./build/templates'))
+.pipe(minify())
+.pipe(gulp.dest('./build/minified_templates'));
+文件被写入的路径是以所给的相对路径根据所给的目标目录计算而来。类似的，相对路径也可以根据所给的 base 来计算。 请查看上述的 gulp.src 来了解更多信息。
+path
+类型： String or Function
+文件将被写入的路径（输出目录）。也可以传入一个函数，在函数中返回相应路径，这个函数也可以由 vinyl 文件实例 来提供。
+options
+类型： Object
+options.cwd
+类型： String 默认值： process.cwd()
+输出目录的 cwd 参数，只在所给的输出目录是相对路径时候有效。
+options.mode
+类型： String 默认值： 0777
+八进制权限字符，用以定义所有在输出目录中所创建的目录的权限。
+```
 #### typescript 
 npm install --save-dev typescript  gulp-typescript
-
-        {
-        "files": [
-                "src/main.ts"
-        ],
-        "compilerOptions": {
-                "noImplicitAny": true,
-                "target": "es5"
-        }
-        }
-
+```
+{
+"files": [
+        "src/main.ts"
+],
+"compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es5"
+}
+}
+```
 #### web 开发插件
 
 #### node 插件
@@ -103,7 +105,7 @@ npm install uglify-js -g [js压缩](https://www.npmjs.com/package/uglify-js)
 npm install uglify-es -g [es6压缩](https://www.npmjs.com/package/uglify-es)
 npm install filesize [文件大小](https://www.npmjs.com/package/filesize)
 npm install source-map [js源文件映射](https://www.npmjs.com/package/source-map)
-
+npm install browser-sync [浏览器同步](https://www.npmjs.com/package/browser-sync)
 
 ##### uglify 压缩参数
         代码生成器尝试输出默认可能的最短代码。如果你想美化输出，传递--beautify（-b）。或者，您可以传递控制代码输出的其他参数：
