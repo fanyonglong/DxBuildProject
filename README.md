@@ -80,7 +80,7 @@ options.mode
 ```
 #### typescript 
 npm install --save-dev typescript  gulp-typescript
-```
+```json
 {
 "files": [
         "src/main.ts"
@@ -139,7 +139,7 @@ npm install through2-filter --save-dev [过滤流](https://www.npmjs.com/package
 npm install through2-map --save-dev [修改流](https://www.npmjs.com/package/through2-map)
 npm install merge2 --save-dev  [合并流](https://www.npmjs.com/package/merge2)
 npm install through2 through2-filter through2-map --save-dev
-
+```javascript
         fs.createReadStream('ex.txt')
         .pipe(through2(function (chunk, enc, callback) {
         for (var i = 0; i < chunk.length; i++)
@@ -160,33 +160,33 @@ npm install through2 through2-filter through2-map --save-dev
         if (chunk.length < 100) this.push(chunk)
         return callback()
         })
-        
+```   
 
 ##### glob文件
 npm install globby  [基于glob模式匹配文件](https://www.npmjs.com/package/globby)
 npm install glob --save-dev  [模式匹配文件](https://www.npmjs.com/package/glob)
+```javascript
+var glob = require("glob")
 
-        var glob = require("glob")
-        
-        // options is optional 
-        glob("**/*.js", options, function (er, files) {
-        // files is an array of filenames. 
-        // If the `nonull` option is set, and nothing 
-        // was found, then files is ["**/*.js"] 
-        // er is an error object or null. 
-        })
-        以下字符在路径部分使用时具有特殊的魔法含义：
+// options is optional 
+glob("**/*.js", options, function (er, files) {
+// files is an array of filenames. 
+// If the `nonull` option is set, and nothing 
+// was found, then files is ["**/*.js"] 
+// er is an error object or null. 
+})
+以下字符在路径部分使用时具有特殊的魔法含义：
 
-        * 匹配单个路径部分中的0个或更多个字符
-        ? 匹配1个字符
-        [...]匹配一系列字符，与RegExp范围类似。如果范围的第一个字符是!或^然后它匹配任何不在范围内的字符。
-        !(pattern|pattern|pattern) 匹配任何不符合提供的任何模式的东西。
-        ?(pattern|pattern|pattern) 匹配提供的模式零次或一次。
-        +(pattern|pattern|pattern) 匹配一个或多个出现的模式。
-        *(a|b|c) 匹配零次或多次出现的模式
-        @(pattern|pat*|pat?erN) 完全匹配提供的模式之一
-        **如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
-
+* 匹配单个路径部分中的0个或更多个字符
+? 匹配1个字符
+[...]匹配一系列字符，与RegExp范围类似。如果范围的第一个字符是!或^然后它匹配任何不在范围内的字符。
+!(pattern|pattern|pattern) 匹配任何不符合提供的任何模式的东西。
+?(pattern|pattern|pattern) 匹配提供的模式零次或一次。
++(pattern|pattern|pattern) 匹配一个或多个出现的模式。
+*(a|b|c) 匹配零次或多次出现的模式
+@(pattern|pat*|pat?erN) 完全匹配提供的模式之一
+**如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
+```
 #### web服务器
 npm install express [express](https://www.npmjs.com/package/express)
 npm install connect [connect](https://www.npmjs.com/package/connect)
@@ -243,47 +243,47 @@ npm install gulp-mocha [测试](https://www.npmjs.com/package/gulp-mocha)
 npm install gulp-beautify [js美化](https://www.npmjs.com/package/gulp-beautify)
 npm install gulp-ngtemplate --save-dev [html模板转换成js模板](https://www.npmjs.com/package/gulp-ngtemplate)
 
+```javascript
+gulp.src("./src/**/hello.txt")
+.pipe(rename(function (path) {
+path.dirname += "/ciao";
+path.basename += "-goodbye";
+path.extname = ".md"
+}))
+.pipe(gulp.dest("./dist"));
 
-        gulp.src("./src/**/hello.txt")
-        .pipe(rename(function (path) {
-        path.dirname += "/ciao";
-        path.basename += "-goodbye";
-        path.extname = ".md"
-        }))
-        .pipe(gulp.dest("./dist"));
+        gulp.src("./src/main/text/hello.txt", { base: process.cwd() })
+.pipe(rename({
+dirname: "main/text/ciao",
+basename: "aloha",
+prefix: "bonjour-",
+suffix: "-hola",
+extname: ".md"
+}))
+.pipe(gulp.dest("./dist"));
+        
+        **文件过滤**
+const gulp = require('gulp');
+const uglify = require('gulp-uglify');
+const filter = require('gulp-filter');
 
-                gulp.src("./src/main/text/hello.txt", { base: process.cwd() })
-        .pipe(rename({
-        dirname: "main/text/ciao",
-        basename: "aloha",
-        prefix: "bonjour-",
-        suffix: "-hola",
-        extname: ".md"
-        }))
-        .pipe(gulp.dest("./dist"));
-         
-         **文件过滤**
-        const gulp = require('gulp');
-        const uglify = require('gulp-uglify');
-        const filter = require('gulp-filter');
-        
-        gulp.task('default', () => {
-        // Create filter instance inside task function 
-        const f = filter(['**', '!*src/vendor'], {restore: true});
-        
-        return gulp.src('src/**/*.js')
-                // Filter a subset of the files 
-                .pipe(f)
-                // Run them through a plugin 
-                .pipe(uglify())
-                // Bring back the previously filtered out files (optional) 
-                .pipe(f.restore)
-                .pipe(gulp.dest('dist'));
-        });
-        // html 压缩
-        gulp.task('minify', function() {
-        return gulp.src('src/*.html')
-        .pipe(htmlmin({collapseWhitespace: true}))
+gulp.task('default', () => {
+// Create filter instance inside task function 
+const f = filter(['**', '!*src/vendor'], {restore: true});
+
+return gulp.src('src/**/*.js')
+        // Filter a subset of the files 
+        .pipe(f)
+        // Run them through a plugin 
+        .pipe(uglify())
+        // Bring back the previously filtered out files (optional) 
+        .pipe(f.restore)
         .pipe(gulp.dest('dist'));
-        });
-
+});
+// html 压缩
+gulp.task('minify', function() {
+return gulp.src('src/*.html')
+.pipe(htmlmin({collapseWhitespace: true}))
+.pipe(gulp.dest('dist'));
+});
+```
