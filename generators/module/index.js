@@ -115,13 +115,13 @@ module.exports = class extends Generator {
             default : "", // Default to current folder name
             validate(val)
             {
-                return val=='';
+                return val==''?'模块名不能为空':true;
             }
 
           }, {
             type    : 'confirm',
             name    : 'cool',
-            message : 'Would you like to enable the Cool feature?'
+            message : '你是否填写正确?'
           }]).then((answers) => {
             this.log('app name', answers.name);
             this.log('cool feature', answers.cool);
