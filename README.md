@@ -111,6 +111,7 @@ npm install source-map [js源文件映射](https://www.npmjs.com/package/source-
 npm install browser-sync [浏览器同步](https://www.npmjs.com/package/browser-sync)
 npm install -g yo   是一个通用的脚手架系统，允许创建任何类型的应用程序。它可以快速开始新项目，并简化现有项目的维护。
 npm install yeoman-generator -g  创建自定义脚手架插件，基类
+npm install --save-dev Inquirer [用户交互命令](#https://www.npmjs.com/package/inquirer) 通用交互式命令行用户界面的集合。
 
 ##### uglify 压缩参数
         代码生成器尝试输出默认可能的最短代码。如果你想美化输出，传递--beautify（-b）。或者，您可以传递控制代码输出的其他参数：
@@ -569,4 +570,66 @@ module.exports = class extends Generator {
     this.log('Something has gone wrong!');
   }
 };
+```
+
+#### 组合生成器
+composeWith 需要两个参数。
+generatorPath- 一个完整的路径，指向你想要组成的生成器（通常使用require.resolve()）。
+options - 一个对象，包含运行后传递给组合生成器的选项
+```javascript
+// In my-generator/generators/turbo/index.js
+module.exports = class extends Generator {
+  prompting() {
+    console.log('prompting - turbo');
+  }
+  writing() {
+    console.log('writing - turbo');
+  }
+};
+// In my-generator/generators/electric/index.js
+module.exports = class extends Generator {
+  prompting() {
+    console.log('prompting - zap');
+  }
+  writing() {
+    console.log('writing - zap');
+  }
+};
+// In my-generator/generators/app/index.js
+module.exports = class extends Generator {
+  initializing() {
+    this.composeWith(require.resolve('../turbo'));
+    this.composeWith(require.resolve('../electric'));
+  }
+};
+```
+## 管理依赖
+NPM
+你只需要调用generator.npmInstall()来运行npm安装。npm install即使被多个发生器多次调用，Yeoman也将确保该命令仅运行一次。
+例如，你想安装lodash作为开发依赖：
+```javascript
+class extends Generator {
+  installingLodash() {
+    this.npmInstall(['lodash'], { 'save-dev': true });
+  }
+}
+```
+这相当于打电话：
+`npm install lodash --save-dev`
+
+## 文件系统
+第一个上下文是目标上下文。目的地是Yeoman将脚手架新应用程序的文件夹。这是你的用户项目文件夹，它是你写脚手架的地方。
+目标上下文被定义为当前工作目录或包含.yo-rc.json文件的最近的父文件夹。该.yo-rc.json文件定义了一个Yeoman项目的根。这个文件允许你的用户在子目录中运行命令并让它们在项目上工作。这确保了最终用户的一致行为。
+你可以得到的目标路径使用generator.destinationRoot()或通过加入一个路径generator.destinationPath('sub/path')。
+```javascript
+// Given destination root is ~/projects
+class extends Generator {
+  paths() {
+    this.destinationRoot();
+    // returns '~/projects'
+
+    this.destinationPath('index.js');
+    // returns '~/projects/index.js'
+  }
+}
 ```

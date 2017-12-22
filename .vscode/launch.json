@@ -14,8 +14,28 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/gulp\\kendo\\index.js"
+            "name": "yo-module task",
+            "program": "C:/Program Files/nodejs/node_global/node_modules/yo/lib/cli.js",
+            "runtimeArgs":["--inspect"],
+            "args": [
+         
+                "dx:module"
+            ]
+            // "runtimeExecutable": "yo",
+            // "runtimeArgs": [
+            //     "dx:module"
+            // ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Yeoman generator",
+            "program": "C:/Program Files/nodejs/node_global/node_modules/yo/lib/cli.js",
+            "args": [
+                "dx:module"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }
