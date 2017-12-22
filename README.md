@@ -1,5 +1,9 @@
 "# DxBuildProject" 
-
+# 项目构建
+- [生成器](#生成器)
+  - [扩展生成器](#扩展生成器)
+  - [运行上下文](#运行上下文)
+  - [用户交互](#用户交互)
 ## GULP 打包编译
 ### 打包工具
 - Browserify
@@ -91,7 +95,6 @@ npm install --save-dev typescript  gulp-typescript
 }
 }
 ```
-#### web 开发插件
 
 #### node 插件
 npm install del --save-dev  删除文件
@@ -106,6 +109,8 @@ npm install uglify-es -g [es6压缩](https://www.npmjs.com/package/uglify-es)
 npm install filesize [文件大小](https://www.npmjs.com/package/filesize)
 npm install source-map [js源文件映射](https://www.npmjs.com/package/source-map)
 npm install browser-sync [浏览器同步](https://www.npmjs.com/package/browser-sync)
+npm install -g yo   是一个通用的脚手架系统，允许创建任何类型的应用程序。它可以快速开始新项目，并简化现有项目的维护。
+npm install yeoman-generator -g  创建自定义脚手架插件，基类
 
 ##### uglify 压缩参数
         代码生成器尝试输出默认可能的最短代码。如果你想美化输出，传递--beautify（-b）。或者，您可以传递控制代码输出的其他参数：
@@ -286,4 +291,282 @@ return gulp.src('src/*.html')
 .pipe(htmlmin({collapseWhitespace: true}))
 .pipe(gulp.dest('dist'));
 });
+```
+## 生成器
+安装
+```bash
+> npm install -g yo yeoman-generator
+> npm install --save yeoman-environment 
+```
+yo提供以下命令。
+yo --help 访问完整的帮助屏幕
+yo --generators 列出每个安装的发电机
+yo --version 获取版本
+故障排除
+大多数问题可以通过运行找到：
+yo doctor
+### 开始创建
+一个生成器的核心是一个Node.js模块。
+首先，创建一个你要编写你的生成器的文件夹。这个文件夹必须被命名generator-name（其中name是您的生成器的名称）。这很重要，因为Yeoman依靠文件系统来查找可用的生成器。
+一旦进入您的生成器文件夹，创建一个package.json文件。这个文件是一个Node.js模块清单。您可以通过npm init从命令行运行或手动输入以下内容来生成此文件：
+```javascript
+{
+  "name": "generator-name",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "generators"
+  ],
+  "keywords": ["yeoman-generator"],
+  "dependencies": {
+    "yeoman-generator": "^1.0.0"
+  }
+}
+```
+该name属性必须以前缀generator-。该keywords属性必须包含"yeoman-generator"，回购必须有我们的发电机页面索引的描述。
+您应该确保将最新版本设置yeoman-generator为依赖项。你可以通过运行：npm install --save yeoman-generator。
+该files属性必须是由您的生成器使用的文件和目录的数组。
+根据需要添加其他package.json属性。
+
+### 文件树
+Yeoman与文件系统以及您如何构建目录树有着深厚的联系。每个子生成器都包含在自己的文件夹中。
+您调用时使用的默认生成器yo name是app生成器。这必须包含在app/目录中。
+在您调用时使用的子生成器yo name:subcommand存储在与子命令完全相同的文件夹中。
+在示例项目中，目录树可能如下所示：
+```javascript
+├───package.json
+└───generators/
+    ├───app/
+    │   └───index.js
+    └───router/
+        └───index.js
+```
+这个生成器将会暴露yo name和yo name:router命令。
+Yeoman允许两个不同的目录结构。它会查看./和generators/注册可用的发电机。
+前面的例子也可以写成如下：
+```javascript
+├───package.json
+├───app/
+│   └───index.js
+└───router/
+    └───index.js
+```
+如果你使用这个第二个目录结构，确保你指向files你package.json所有的生成文件夹中的属性。
+```javascript
+{
+  "files": [
+    "app",
+    "router"
+  ]
+}
+```
+## 扩展生成器
+一旦你有这个结构，是时候写实际的发电机。
+Yeoman提供了一个基础生成器，你可以扩展来实现你自己的行为。这个基础生成器将添加大部分您期望的功能以减轻您的任务。
+在生成器的index.js文件中，以下是扩展基本生成器的方法：
+```javascript
+var Generator = require('yeoman-generator');
+module.exports = class extends Generator {};
+```
+我们将扩展生成器分配给module.exports生态系统。这就是我们如何在Node.js中导出模块。
+如果您需要支持ES5环境，Generator.extend()则可以使用静态方法来扩展基类，并允许您提供新的原型。这个功能来自Class-extend模块，如果你曾经使用过Backbone，那么你应该很熟悉。
+#### 覆盖构造函数
+一些生成器方法只能在constructor函数内调用。这些特殊的方法可能会做一些事情，比如设置重要的状态控件，并且可能无法在构造函数之外运行。
+要覆盖生成器构造函数，请添加如下所示的构造函数方法：
+```javascript
+module.exports = class extends Generator {
+  // The name `constructor` is important here
+  constructor(args, opts) {
+    // Calling the super constructor is important so our generator is correctly set up
+    super(args, opts);
+    // Next, add your custom code
+    this.option('babel'); // This method adds support for a `--babel` flag
+  }
+};
+```
+#### 添加您自己的功能
+添加到原型的每个方法都会在调用发生器后运行 - 通常是按顺序进行的。但是，我们将在下一节中看到，一些特殊的方法名称将触发特定的运行顺序。
+我们来添加一些方法：
+```javascript
+module.exports = class extends Generator {
+  method1() {
+    this.log('method 1 just ran');
+  }
+  method2() {
+    this.log('method 2 just ran');
+  }
+};
+```
+#### 运行生成器
+在这一点上，你有一个工作的发电机。下一个合乎逻辑的步骤是运行它，看看它是否工作。
+由于您正在本地开发生成器，因此尚不能作为全局npm模块使用。全局模块可以使用npm创建并符号链接到本地​​模块。这就是你想要做的事情：
+在命令行中，从您的生成器项目的根目录（在该generator-name/文件夹中），键入：
+`npm link`
+这将安装您的项目依赖和符号连接一个全局模块到您的本地文件。npm完成后，你可以打电话yo name，你应该看到this.log，早先定义，在终端呈现。恭喜你，你刚刚建立你的第一个发电机！
+#### 找到项目的根
+在运行一个生成器的时候，Yeoman会尝试根据它运行的文件夹的上下文来判断一些事情。
+最重要的是，Yeoman在目录树中搜索一个.yo-rc.json文件。如果找到，它会将文件的位置视为项目的根目录。在幕后，Yeoman会将当前目录改为.yo-rc.json文件位置，并在那里运行请求的生成器。
+存储模块创建.yo-rc.json文件。this.config.save()第一次从发生器调用将创建该文件。
+所以，如果您的生成器没有运行在您当前的工作目录中，请确保您没有.yo-rc.json在目录树的某处。
+
+## 运行上下文
+1. 前缀方法名称由下划线（例如_private_method）。
+```javascript
+  class extends Generator {
+    method1() {
+      console.log('hey 1');
+    }
+    _private_method() {
+      console.log('private hey');
+    }
+  }
+```
+2. 使用实例方法：
+```javascript
+ class extends Generator {
+    constructor(args, opts) {
+      // Calling the super constructor is important so our generator is correctly set up
+      super(args, opts)
+
+      this.helperMethod = function () {
+        console.log('won\'t be called automatically');
+      };
+    }
+  }
+```
+3. 扩展父代生成器：
+```javascript
+  class MyBase extends Generator {
+    helper() {
+      console.log('methods on the parent generator won\'t be called automatically');
+    }
+  }
+
+  module.exports = class extends MyBase {
+    exec() {
+      this.helper();
+    }
+  };
+```
+可用的优先级是（按运行顺序）：
+
+1. initializing - 你的初始化方法（检查当前的项目状态，获取配置等）
+1. prompting- 在哪里提示用户选择（你打电话的地方this.prompt()）
+1. configuring- 保存配置并配置项目（创建.editorconfig文件和其他元数据文件）
+1. default - 如果方法名称与优先级不匹配，则会被推送到该组。
+1. writing - 你在哪里编写生成器特定的文件（路由，控制器等）
+1. conflicts - 处理冲突（在内部使用）
+1. install - 在哪里安装（npm，凉亭）
+1. end- 最后叫，清理，再见，等等
+
+#### 异步任务
+```javascript
+asyncTask() {
+  var done = this.async();
+
+  getUserEmail(function (err, name) {
+    done(err);
+  });
+}
+```
+## 用户交互
+例如，从不使用console.log()或process.stdout.write()输出内容很重要。使用它们会隐藏不使用终端的用户的输出。相反，总是依靠UI泛型this.log()方法，其中this是当前生成器的上下文。 
+
+提示是生成器与用户交互的主要方式。提示模块由Inquirer.js提供，您应该参考其API获取可用提示选项的列表。
+该prompt方法是异步的，并返回一个承诺。您需要从您的任务中返回承诺，以便在运行下一个之前等待完成。（详细了解异步任务）
+```javascript
+module.exports = class extends Generator {
+  prompting() {
+    return this.prompt([{
+      type    : 'input',
+      name    : 'name',
+      message : 'Your project name',
+      default : this.appname // Default to current folder name
+    }, {
+      type    : 'confirm',
+      name    : 'cool',
+      message : 'Would you like to enable the Cool feature?'
+    }]).then((answers) => {
+      this.log('app name', answers.name);
+      this.log('cool feature', answers.cool);
+    });
+  }
+};
+```
+### 记住用户的喜好
+用户每次运行发电机时可能会对某些问题提供相同的输入。对于这些问题，您可能想要记住用户以前回答什么，并将该答案用作新的答案default。
+Yeoman通过向store问题对象添加属性扩展了Inquirer.js API 。此属性允许您指定将来用户提供的答案应该用作默认答案。这可以如下完成：
+```javascript
+this.prompt({
+  type    : 'input',
+  name    : 'username',
+  message : 'What\'s your GitHub username',
+  store   : true
+});
+```
+### 参数
+参数直接从命令行传递：
+`yo webapp my-project`
+在这个例子中，my-project将是第一个参数。
+为了通知系统我们期望有一个参数，我们使用这个this.argument()方法。这个方法接受一个name（String）和一个可选的选项哈希。
+这个name论点将可以作为：this.options[name]。
+
+options接受多个键值对：
+:  desc 参数描述
+required 布尔是否需要
+type 字符串，数字，数组（也可以是接收原始字符串值并解析它的自定义函数）
+default 这个参数的默认值
+该方法必须在constructor方法内调用。否则Yeoman将无法在用户使用帮助选项调用您的发电机时输出相关的帮助信息yo webapp --help。
+
+这里是一个例子：
+```javascript
+module.exports = class extends Generator {
+  // note: arguments and options should be defined in the constructor.
+  constructor(args, opts) {
+    super(args, opts);
+    // This makes `appname` a required argument.
+    this.argument('appname', { type: String, required: true });
+    // And you can then access it later; e.g.
+    this.log(this.options.appname);
+  }
+};
+```
+类型的参数Array将包含传递给生成器的所有其余参数。
+### 选项
+选项看起来很像参数，但它们写成命令行标志。
+`yo webapp --coffee`
+为了通知系统我们期望一个选项，我们使用这个generator.option()方法。
+这个方法接受一个name（String）和[options]。
+该name值将用于在匹配键中检索参数generator.options[name]。
+
+options（第二个参数）接受多个键值对：
+:  desc 选项说明
+alias 选项的简称
+type 布尔，字符串或数字（也可以是接收原始字符串值并解析它的自定义函数）
+default 默认值
+hide 布尔是否隐藏帮助
+这里是一个例子：
+```javascript
+module.exports = class extends Generator {
+  // note: arguments and options should be defined in the constructor.
+  constructor(args, opts) {
+    super(args, opts);
+
+    // This method adds support for a `--coffee` flag
+    this.option('coffee');
+
+    // And you can then access it later; e.g.
+    this.scriptSuffix = (this.options.coffee ? ".coffee": ".js");
+  }
+};
+```
+### 输出信息
+输出信息由generator.log模块处理。
+你将使用的主要方法是generator.log（例如generator.log('Hey! Welcome to my awesome generator')）。它需要一个字符串并输出给用户; 基本上它console.log()是在终端会话中使用时模仿。你可以这样使用它：
+```javascript
+module.exports = class extends Generator {
+  myAction() {
+    this.log('Something has gone wrong!');
+  }
+};
 ```
