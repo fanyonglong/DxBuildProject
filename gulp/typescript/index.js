@@ -17,10 +17,10 @@ gulp.task('default',['clean'],()=>{
       return gulp.src('./src/typescript/**/*.ts').pipe(ts({
           //  declaration:true, // 生成相应的d.ts 生文
             target:'es5',
-            noImplicitAny:true,
+            noImplicitAny:false,
           //  outFile:"main.js",
-          module:"amd",
-          outFile: "main.js"
+       //   module:"node",
+      //    outFile: "main.js"
          })).pipe(gulp.dest('./dist/typescript'));
 });
       
