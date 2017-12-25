@@ -1,5 +1,6 @@
 
 var Generator=require('yeoman-generator');
+var path=require('path');
 
 // 定的方法会自动运行
 // 只有三种不会，1._下线线私有方法。2.构造函数定义方法。3.继承父类的方法
@@ -70,7 +71,8 @@ module.exports = class extends Generator {
             type:String,
             default:"1"
          });
- 
+         this.contextRoot=path.resolve(__dirname,'../../');
+         this.destinationRoot(this.contextRoot);
     }
     initializing(args,opts)
     {
@@ -108,14 +110,40 @@ module.exports = class extends Generator {
     */
     prompting()
     {
-        return this.prompt([{
+        return true?false:this.prompt([{
             type    : 'input',
             name    : 'name',
             message : '请输出你的模块名',
             default : "", // Default to current folder name
+            filter(val)
+            {
+                return val.charAt(0).toUpperCase()+"-"+val.substr(1);
+            },
             validate(val)
             {
                 return val==''?'模块名不能为空':true;
+            }
+
+          },{
+            type    : 'list',
+            name    : 'moduleType',
+            message : '请选择模块类型',
+            choices:['vue','react','angular'],
+            default : 0, // Default to current folder name
+            validate(val)
+            {
+                return val==''?'请选择模块类型':true;
+            }
+
+          },{
+            type    : 'checkbox',
+            name    : 'extendTools',
+            message : '请选择扩展工具',
+            choices:['router','redux','rxjs'],
+            default : 1, // Default to current folder name
+            validate(val)
+            {
+                return val==''?'请选择扩展工具':true;
             }
 
           }, {
@@ -124,11 +152,32 @@ module.exports = class extends Generator {
             message : '你是否填写正确?'
           }]).then((answers) => {
             this.log('app name', answers.name);
+            this.log('moduleType', answers.moduleType);
+            this.log('extendTools', answers.extendTools);
             this.log('cool feature', answers.cool);
           });
     }
     coptyTemplate()
     {
-
+        /*
+        路径3:E:\fanyonglong2016\project\DxBuildProject
+        路径1:E:\fanyonglong2016\project\DxBuildProject
+        路径4:E:\fanyonglong2016\project\DxBuildProject\template
+        路径6:E:\fanyonglong2016\project\DxBuildProject\generators\module\templates\index.js
+        路径7:E:\fanyonglong2016\project\DxBuildProject\index.js
+        */
+      // this.contextRoot=path.resolve(__dirname,'../../');
+       // this.destinationRoot(path.resolve(__dirname,'../../'));
+        // this.log('路径3:'+this.contextRoot); // 运行根目
+        // this.log('路径1:'+this.destinationRoot())  // 运行根目
+        // this.log('路径4:'+this.destinationPath('template'));
+        // this.log('路径6:'+this.templatePath('index.js'));
+        // this.log('路径7:'+this.sourceRoot('index.js'));
+        this.log('glob:'+this.templatePath('./*.js'));
+    }
+    writing()
+    {
+         // 复制
+         this.fs.copy(this.templatePath('./*.js'),this.destinationPath('src/generators'));
     }
 };
