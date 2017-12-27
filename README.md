@@ -97,21 +97,21 @@ npm install --save-dev typescript  gulp-typescript
 ```
 
 #### node 插件
-npm install del --save-dev  删除文件
-npm install chalk --save-dev 颜色字体日志
-npm install run-sequence --save-dev 同步执行gulp任务
-npm install yargs  --save-dev 参数转换
-npm install replace-ext [替换后缀](https://www.npmjs.com/package/replace-ext)
-npm install pump --save-dev [串联流处理,错误处理](https://www.npmjs.com/package/pump)
-npm install html-minifier [html压缩](https://www.npmjs.com/package/html-minifier)
-npm install uglify-js -g [js压缩](https://www.npmjs.com/package/uglify-js)
-npm install uglify-es -g [es6压缩](https://www.npmjs.com/package/uglify-es)
-npm install filesize [文件大小](https://www.npmjs.com/package/filesize)
-npm install source-map [js源文件映射](https://www.npmjs.com/package/source-map)
-npm install browser-sync [浏览器同步](https://www.npmjs.com/package/browser-sync)
-npm install -g yo   是一个通用的脚手架系统，允许创建任何类型的应用程序。它可以快速开始新项目，并简化现有项目的维护。
-npm install yeoman-generator -g  创建自定义脚手架插件，基类
-npm install --save-dev Inquirer [用户交互命令](#https://www.npmjs.com/package/inquirer) 通用交互式命令行用户界面的集合。
+npm install del --save-dev  删除文件   
+npm install chalk --save-dev 颜色字体日志   
+npm install run-sequence --save-dev 同步执行gulp任务   
+npm install yargs  --save-dev 参数转换   
+npm install replace-ext [替换后缀](https://www.npmjs.com/package/replace-ext)   
+npm install pump --save-dev [串联流处理,错误处理](https://www.npmjs.com/package/pump)   
+npm install html-minifier [html压缩](https://www.npmjs.com/package/html-minifier)   
+npm install uglify-js -g [js压缩](https://www.npmjs.com/package/uglify-js)   
+npm install uglify-es -g [es6压缩](https://www.npmjs.com/package/uglify-es)   
+npm install filesize [文件大小](https://www.npmjs.com/package/filesize)   
+npm install source-map [js源文件映射](https://www.npmjs.com/package/source-map)   
+npm install browser-sync [浏览器同步](https://www.npmjs.com/package/browser-sync)  
+npm install -g yo   是一个通用的脚手架系统，允许创建任何类型的应用程序。它可以快速开始新项目，并简化现有项目的维护。   
+npm install yeoman-generator -g  创建自定义脚手架插件，基类   
+npm install --save-dev Inquirer [用户交互命令](#https://www.npmjs.com/package/inquirer) 通用交互式命令行用户界面的集合。   
 
 ##### uglify 压缩参数
         代码生成器尝试输出默认可能的最短代码。如果你想美化输出，传递--beautify（-b）。或者，您可以传递控制代码输出的其他参数：
@@ -139,12 +139,12 @@ npm install --save-dev Inquirer [用户交互命令](#https://www.npmjs.com/pack
         wrap_iife（默认false） - 传递true包装立即调用函数表达式。请参阅 ＃640了解更多详情。
 
 ##### 文件流
-npm install glob-stream) [readable流](https://www.npmjs.com/package/glob-stream)
-npm install through2 --save-dev  [操作流](https://www.npmjs.com/package/through2)
-npm install through2-filter --save-dev [过滤流](https://www.npmjs.com/package/through2-filter)
-npm install through2-map --save-dev [修改流](https://www.npmjs.com/package/through2-map)
-npm install merge2 --save-dev  [合并流](https://www.npmjs.com/package/merge2)
-npm install through2 through2-filter through2-map --save-dev
+npm install glob-stream) [readable流](https://www.npmjs.com/package/glob-stream)   
+npm install through2 --save-dev  [操作流](https://www.npmjs.com/package/through2)    
+npm install through2-filter --save-dev [过滤流](https://www.npmjs.com/package/through2-filter)    
+npm install through2-map --save-dev [修改流](https://www.npmjs.com/package/through2-map)   
+npm install merge2 --save-dev  [合并流](https://www.npmjs.com/package/merge2)    
+npm install through2 through2-filter through2-map --save-dev   
 ```javascript
         fs.createReadStream('ex.txt')
         .pipe(through2(function (chunk, enc, callback) {
@@ -169,9 +169,9 @@ npm install through2 through2-filter through2-map --save-dev
 ```   
 
 ##### glob文件
-npm install globby  [基于glob模式匹配文件](https://www.npmjs.com/package/globby)
-npm install glob --save-dev  [模式匹配文件](https://www.npmjs.com/package/glob)
-```javascript
+npm install globby  [基于glob模式匹配文件](https://www.npmjs.com/package/globby)   
+npm install glob --save-dev  [模式匹配文件](https://www.npmjs.com/package/glob)    
+```javascript 
 var glob = require("glob")
 
 // options is optional 
@@ -196,60 +196,60 @@ glob("**/*.js", options, function (er, files) {
 
 
 #### web服务器
-npm install express [express](https://www.npmjs.com/package/express)
-npm install connect [connect](https://www.npmjs.com/package/connect)
+npm install express [express](https://www.npmjs.com/package/express)    
+npm install connect [connect](https://www.npmjs.com/package/connect)    
 #### 测试插件
-npm install mocha [node和web测试](https://www.npmjs.com/package/mocha)  单元测试的框架,自动化测试
-npm install karma [浏览器运行环境测试](https://www.npmjs.com/package/karma) 跑测试的驱动,自动化测试
-npm install jasmine  [测试](https://www.npmjs.com/package/jasmine) 对第本版浏览器由比较号的支持,自动化测试
-npm install eslint [js检测](https://www.npmjs.com/package/eslint)
-npm install stylelint [样式检测](https://www.npmjs.com/package/stylelint)
-npm install tslint [typescript检测](https://www.npmjs.com/package/tslint)
-npm install sass-lint [sass检测](https://www.npmjs.com/package/sass-lint)
-npm install gulp-lesshint --save-dev [less检测](https://www.npmjs.com/package/gulp-lesshint)
+npm install mocha [node和web测试](https://www.npmjs.com/package/mocha)  单元测试的框架,自动化测试           
+npm install karma [浏览器运行环境测试](https://www.npmjs.com/package/karma) 跑测试的驱动,自动化测试           
+npm install jasmine  [测试](https://www.npmjs.com/package/jasmine) 对第本版浏览器由比较号的支持,自动化测试           
+npm install eslint [js检测](https://www.npmjs.com/package/eslint)           
+npm install stylelint [样式检测](https://www.npmjs.com/package/stylelint)           
+npm install tslint [typescript检测](https://www.npmjs.com/package/tslint)           
+npm install sass-lint [sass检测](https://www.npmjs.com/package/sass-lint)           
+npm install gulp-lesshint --save-dev [less检测](https://www.npmjs.com/package/gulp-lesshint)           
 ##### gulp插件
-npm install gulp-livescript [js编译器](https://www.npmjs.com/package/gulp-livescript)
-npm install gulp-watch [文件观察](https://www.npmjs.com/package/gulp-watch) 使用超快速chokidar并且发射乙烯基对象的文件观察者。
-npm install gulp-plumber  --save-dev [抑制错误处理](https://www.npmjs.com/package/gulp-plumber)
-npm install gulp-rename --save-dev  [文件重命名](https://www.npmjs.com/package/gulp-rename)           
-npm install gulp-uglify  --save-dev [js压缩](https://www.npmjs.com/package/gulp-uglify)
-npm install gulp-util --save-dev [工具](https://www.npmjs.com/package/gulp-util)
-npm install gulp-sourcemaps --save-dev [源码地图映射](https://www.npmjs.com/package/gulp-sourcemaps)
-npm install gulp-if  --save-dev [条件判断](https://www.npmjs.com/package/gulp-if)
-npm install gulp-concat  --save-dev [文件合并](https://www.npmjs.com/package/gulp-concat)
-npm install gulp-autoprefixer   --save-dev[css 前缀](https://www.npmjs.com/package/gulp-autoprefixer)
-npm install gulp-react [React jsx语法转换](https://www.npmjs.com/package/gulp-react)
-npm install gulp-babel babel-preset-env  --save-dev  [es6语法转换](https://www.npmjs.com/package/gulp-babel)
-npm install gulp-imagemin  --save-dev  [图片压缩](https://www.npmjs.com/package/gulp-imagemin)
-npm install gulp.spritesmith-multi [图片合并包装器](https://www.npmjs.com/package/gulp.spritesmith-multi)
-npm install gulp.spritesmith [图片合并](https://www.npmjs.com/package/gulp.spritesmith)
-npm install gulp-clean-css --save-dev [css压缩](https://www.npmjs.com/package/gulp-clean-css)
-npm install gulp-filter  --save-dev  [文件过滤](https://www.npmjs.com/package/gulp-filter)
-npm install gulp-less  --save-dev [less编译](https://www.npmjs.com/package/gulp-less)
-npm install gulp-sass --save-dev [sass编译](https://www.npmjs.com/package/gulp-sass) 
+npm install gulp-livescript [js编译器](https://www.npmjs.com/package/gulp-livescript)           
+npm install gulp-watch [文件观察](https://www.npmjs.com/package/gulp-watch) 使用超快速chokidar并且发射乙烯基对象的文件观察者。           
+npm install gulp-plumber  --save-dev [抑制错误处理](https://www.npmjs.com/package/gulp-plumber)           
+npm install gulp-rename --save-dev  [文件重命名](https://www.npmjs.com/package/gulp-rename)                      
+npm install gulp-uglify  --save-dev [js压缩](https://www.npmjs.com/package/gulp-uglify)           
+npm install gulp-util --save-dev [工具](https://www.npmjs.com/package/gulp-util)           
+npm install gulp-sourcemaps --save-dev [源码地图映射](https://www.npmjs.com/package/gulp-sourcemaps)           
+npm install gulp-if  --save-dev [条件判断](https://www.npmjs.com/package/gulp-if)           
+npm install gulp-concat  --save-dev [文件合并](https://www.npmjs.com/package/gulp-concat)           
+npm install gulp-autoprefixer   --save-dev[css 前缀](https://www.npmjs.com/package/gulp-autoprefixer)           
+npm install gulp-react [React jsx语法转换](https://www.npmjs.com/package/gulp-react)           
+npm install gulp-babel babel-preset-env  --save-dev  [es6语法转换](https://www.npmjs.com/package/gulp-babel)           
+npm install gulp-imagemin  --save-dev  [图片压缩](https://www.npmjs.com/package/gulp-imagemin)           
+npm install gulp.spritesmith-multi [图片合并包装器](https://www.npmjs.com/package/gulp.spritesmith-multi)           
+npm install gulp.spritesmith [图片合并](https://www.npmjs.com/package/gulp.spritesmith)           
+npm install gulp-clean-css --save-dev [css压缩](https://www.npmjs.com/package/gulp-clean-css)           
+npm install gulp-filter  --save-dev  [文件过滤](https://www.npmjs.com/package/gulp-filter)           
+npm install gulp-less  --save-dev [less编译](https://www.npmjs.com/package/gulp-less)           
+npm install gulp-sass --save-dev [sass编译](https://www.npmjs.com/package/gulp-sass)            
 PostCSS gulp插件通过几个插件来管道CSS，但只解析CSS一次。
-npm install gulp-postcss  --save-dev  [解析css](https://www.npmjs.com/package/gulp-postcss)
-npm install gulp-htmlmin --save-dev [html压缩](https://www.npmjs.com/package/gulp-htmlmin)
-npm install gulp-changed  --save-dev [否决不变的文件](https://www.npmjs.com/package/gulp-changed)
-npm install gulp-zip [压缩包](https://www.npmjs.com/package/gulp-zip)
-npm install gulp-template  --save-dev [underscore template](https://www.npmjs.com/package/gulp-template)
-npm install gulp-iconfont  --save-dev [svn 转换font](https://www.npmjs.com/package/gulp-iconfont)
-npm install gulp-file-include  --save-dev  [html头部引入](https://www.npmjs.com/package/gulp-file-include)
-npm install gulp-markdown --save-dev  [markdown转换](https://www.npmjs.com/package/gulp-markdown)
-npm install gulp-sort --save-dev [排序](https://www.npmjs.com/package/gulp-sort)
-npm install gulp-notify  --save-dev [通知](https://www.npmjs.com/package/gulp-notify)
-npm install gulp-each  --save-dev [循环文件](https://www.npmjs.com/package/gulp-each)
-npm install merge2 --save-dev [合并数据流](https://www.npmjs.com/package/merge2)
-npm install gulp-open --save-dev [打开浏览器](https://www.npmjs.com/package/gulp-open)
-npm install opn   --save-dev [打开浏览器](https://www.npmjs.com/package/opn)
-npm install shuji  --save-dev [根据source map还原js](https://www.npmjs.com/package/shuji)
-npm install gulp-debug --save-dev [调试](https://www.npmjs.com/package/gulp-debug)
-npm install gulp-git --save-dev [git代码管理](https://www.npmjs.com/package/gulp-git)
-npm install gulp-posthtml [处理html](https://www.npmjs.com/package/gulp-posthtml)
-npm install gulp-sitemap --save-dev  [SEO优化](https://www.npmjs.com/package/gulp-sitemap)
-npm install gulp-mocha [测试](https://www.npmjs.com/package/gulp-mocha)
-npm install gulp-beautify [js美化](https://www.npmjs.com/package/gulp-beautify)
-npm install gulp-ngtemplate --save-dev [html模板转换成js模板](https://www.npmjs.com/package/gulp-ngtemplate)
+npm install gulp-postcss  --save-dev  [解析css](https://www.npmjs.com/package/gulp-postcss)           
+npm install gulp-htmlmin --save-dev [html压缩](https://www.npmjs.com/package/gulp-htmlmin)           
+npm install gulp-changed  --save-dev [否决不变的文件](https://www.npmjs.com/package/gulp-changed)           
+npm install gulp-zip [压缩包](https://www.npmjs.com/package/gulp-zip)           
+npm install gulp-template  --save-dev [underscore template](https://www.npmjs.com/package/gulp-template)           
+npm install gulp-iconfont  --save-dev [svn 转换font](https://www.npmjs.com/package/gulp-iconfont)           
+npm install gulp-file-include  --save-dev  [html头部引入](https://www.npmjs.com/package/gulp-file-include)           
+npm install gulp-markdown --save-dev  [markdown转换](https://www.npmjs.com/package/gulp-markdown)           
+npm install gulp-sort --save-dev [排序](https://www.npmjs.com/package/gulp-sort)           
+npm install gulp-notify  --save-dev [通知](https://www.npmjs.com/package/gulp-notify)           
+npm install gulp-each  --save-dev [循环文件](https://www.npmjs.com/package/gulp-each)           
+npm install merge2 --save-dev [合并数据流](https://www.npmjs.com/package/merge2)           
+npm install gulp-open --save-dev [打开浏览器](https://www.npmjs.com/package/gulp-open)           
+npm install opn   --save-dev [打开浏览器](https://www.npmjs.com/package/opn)           
+npm install shuji  --save-dev [根据source map还原js](https://www.npmjs.com/package/shuji)           
+npm install gulp-debug --save-dev [调试](https://www.npmjs.com/package/gulp-debug)           
+npm install gulp-git --save-dev [git代码管理](https://www.npmjs.com/package/gulp-git)           
+npm install gulp-posthtml [处理html](https://www.npmjs.com/package/gulp-posthtml)           
+npm install gulp-sitemap --save-dev  [SEO优化](https://www.npmjs.com/package/gulp-sitemap)           
+npm install gulp-mocha [测试](https://www.npmjs.com/package/gulp-mocha)           
+npm install gulp-beautify [js美化](https://www.npmjs.com/package/gulp-beautify)           
+npm install gulp-ngtemplate --save-dev [html模板转换成js模板](https://www.npmjs.com/package/gulp-ngtemplate)           
 
 ```javascript
 gulp.src("./src/**/hello.txt")
