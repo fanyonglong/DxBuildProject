@@ -36,6 +36,17 @@
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "yargs",
+            "program": "${workspaceFolder}/yargs-example.js",
+            "args": [
+                "hello",
+                "--name",
+                "Parrot"
+            ]
         }
     ]
 }
