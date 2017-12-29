@@ -55,7 +55,11 @@ var argv=yargs.help('info').version('2.0.1').boolean('prod').options({
 		type: "boolean",
 		describe: "调试",
 		group: 'start options'
-	}
+  },
+  "http-only":{
+    type: "boolean",
+		describe: "调试",
+  }
 }).usage("$0 -operand1 number -operand2 number -operation [add|subtract]").usage("test 4.3.2\n" +
 "Usage: https://webpack.js.org/api/cli/\n" +
 "Usage without config file: test <entry> [<entry>] <output>\n" +
