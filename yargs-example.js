@@ -40,6 +40,10 @@ var argv=yargs.help('info').version('2.0.1').boolean('prod').options({
  //   type:'string',
     describe: '请输入名称'
   },
+  "x-age":{
+    type:'number',
+    describe: '请输入年龄'
+  },
   age:{
     type:'number',
     skipValidation:true,
@@ -57,8 +61,7 @@ var argv=yargs.help('info').version('2.0.1').boolean('prod').options({
 		group: 'start options'
   },
   "http-only":{
-    type: "boolean",
-		describe: "调试",
+    type: "boolean"
   }
 }).usage("$0 -operand1 number -operand2 number -operation [add|subtract]").usage("test 4.3.2\n" +
 "Usage: https://webpack.js.org/api/cli/\n" +
