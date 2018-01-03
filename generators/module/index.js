@@ -143,7 +143,18 @@ module.exports = class extends Generator {
             default : 1, // Default to current folder name
             validate(val)
             {
-                return val==''?'请选择扩展工具':true;
+                // Declare function as asynchronous, and save the done callback
+                var done = this.async();
+                // Do async stuff
+                setTimeout(function() {
+                if (typeof input !== 'number') {
+                    // Pass the return value in the done callback
+                    done('请选择扩展工具');
+                    return;
+                }
+                // Pass the return value in the done callback
+                done(null, true);
+                }, 3000);
             }
 
           }, {

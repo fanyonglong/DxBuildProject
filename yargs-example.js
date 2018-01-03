@@ -67,7 +67,9 @@ var argv=yargs.help('info').version('2.0.1').boolean('prod').options({
 "Usage: https://webpack.js.org/api/cli/\n" +
 "Usage without config file: test <entry> [<entry>] <output>\n" +
 "Usage with config file: test")
-.usage('webpack 2.0.1\n使用：webpack <file> [<file>]') .command(['start [app]', 'run', 'up'], 'Start up an app', {}, (argv) => {
+.usage('webpack 2.0.1\n使用：webpack <file> [<file>]').command('$0 <task>','任务',{},argv=>{
+    console.log('任务'+argv.task);
+}) .command(['start [app]', 'run', 'up'], 'Start up an app', {}, (argv) => {
   console.log('starting up the', argv.app || 'default', 'app')
 })
 .command({
@@ -94,7 +96,7 @@ var argv=yargs.help('info').version('2.0.1').boolean('prod').options({
       'banana'
     ]);
   }, 500);
-}).example('start','请输start').demandCommand(0,'请运行一个服务').global('age',false).wrap(null).argv;
+}).example('start','请输start').demandCommand(1,'请运行一个服务').global('age',false).wrap(null).argv;
 
 require('./yargs-example2')
 
