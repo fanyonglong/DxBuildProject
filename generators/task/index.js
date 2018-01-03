@@ -1,5 +1,5 @@
-var Generator=require('../util/baseGenerators');
-
+const Generator=require('../util/baseGenerators');
+const fs =require('fs');
 module.exports=class extends Generator
 {
     prompting()
@@ -28,7 +28,22 @@ module.exports=class extends Generator
             {
                 return val==''?'请选择任务类型':true;
             }
-        }]);
+        }]).then(argv=>{
+                this.taskName=argv.taskName;
+                this.taskType=argv.taskType;
+        });
+    }
+    writing()
+    {
+        var {taskType,taskName}=this;
+        this.fs.copyTpl(this.templatePath(taskType,"**/*.js"),this.destinationPath('gulp',taskName),{
+            taskName
+        });
+        fs.mkdirSync(this.destinationPath('src',taskName));
+    }
+    end()
+    {
+        this.log('创建成功');
     }
 
 }

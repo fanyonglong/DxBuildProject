@@ -4,7 +4,7 @@
   "description": "\"# DxBuildProject\"",
   "main": "index.js",
   "scripts": {
-    "yo":"npm install yo yeoman-generator -g",
+    "yo": "npm install yo yeoman-generator -g",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,15 +12,24 @@
     "url": "git+https://github.com/fanyonglong/DxBuildProject.git"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.1.2",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-preset-env": "^1.6.1",
+    "browser-sync": "^2.23.2",
     "chalk": "^2.3.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-eslint": "^4.0.0",
     "gulp-filter": "^5.0.1",
     "gulp-plumber": "^1.1.0",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-typescript": "^3.2.3",
     "gulp-uglify": "^3.0.0",
     "merge2": "^1.2.0",
+    "opn": "^5.1.0",
     "run-sequence": "^2.2.0",
     "through2": "^2.0.3",
     "typescript": "^2.6.2",

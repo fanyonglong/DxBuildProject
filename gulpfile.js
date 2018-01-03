@@ -1,12 +1,21 @@
 const gulp=require('gulp');
-const argv=require('yargs').option('task',{
-    alias:"t",
-    type:"string",
-    describe:"执行的任务名称",
-    default:'',
-    requiresArg:true
+const argv=require('yargs').options({
+    "task":{
+        alias:"t",
+        type:"string",
+        describe:"执行的任务名称",
+        default:'',
+        requiresArg:true
+    },
+    "start":{
+        type:"boolean",
+        describe:"启动浏览器",
+        default:false
+    }
+
 }).usage('usage:gulp --t|--task <taskname>').help().argv;
 const runSequence=require('run-sequence');
+const browserSync=require('browser-sync').create();
 const del = require('del');
 const {exec}=require('child_process');
 var log=require('./ultil')
@@ -22,10 +31,20 @@ gulp.task('default',()=>{
         log.green('开始执行构建任务');
         exec(()=>{
             log.green('构建完成');
+            if(argv.start)
+            {
+                browserSync.init({
+                    server: {
+                        baseDir: "./dist/"+argv.task
+                    }
+                });
+            }
+        },()=>{
+            browserSync.reload();
         });
     }catch(e)
     {
-        log.red('找不到任务');
+        log.red(e);
     }
 
 })

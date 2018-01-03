@@ -19,7 +19,7 @@
             "runtimeArgs":["--inspect"],
             "args": [
          
-                "dx:module"
+                "dx:task"
             ]
             // "runtimeExecutable": "yo",
             // "runtimeArgs": [
@@ -32,7 +32,7 @@
             "name": "Yeoman generator",
             "program": "C:/Program Files/nodejs/node_global/node_modules/yo/lib/cli.js",
             "args": [
-                "dx:module"
+                "dx:task"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"

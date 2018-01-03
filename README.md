@@ -112,6 +112,7 @@ npm install browser-sync [浏览器同步](https://www.npmjs.com/package/browser
 npm install -g yo   是一个通用的脚手架系统，允许创建任何类型的应用程序。它可以快速开始新项目，并简化现有项目的维护。   
 npm install yeoman-generator -g  创建自定义脚手架插件，基类   
 npm install --save-dev Inquirer [用户交互命令](#https://www.npmjs.com/package/inquirer) 通用交互式命令行用户界面的集合。   
+npm install opn   --save-dev [打开浏览器](https://www.npmjs.com/package/opn)  
 
 ##### uglify 压缩参数
         代码生成器尝试输出默认可能的最短代码。如果你想美化输出，传递--beautify（-b）。或者，您可以传递控制代码输出的其他参数：
@@ -206,8 +207,17 @@ npm install eslint [js检测](https://www.npmjs.com/package/eslint)
 npm install stylelint [样式检测](https://www.npmjs.com/package/stylelint)           
 npm install tslint [typescript检测](https://www.npmjs.com/package/tslint)           
 npm install sass-lint [sass检测](https://www.npmjs.com/package/sass-lint)           
-npm install gulp-lesshint --save-dev [less检测](https://www.npmjs.com/package/gulp-lesshint)           
-##### gulp插件
+npm install gulp-lesshint --save-dev [less检测](https://www.npmjs.com/package/gulp-lesshint)      
+
+#### babel 
+npm install gulp-babel babel-core babel-preset-env  --save-dev  [es6语法转换](https://www.npmjs.com/package/gulp-babel)   
+npm install babel-eslint --save-dev [babel检测](#https://www.npmjs.com/package/babel-eslint)    
+#### babel es2017   
+npm install --save-dev babel-plugin-syntax-object-rest-spread  对象扩展运算符
+npm install --save-dev babel-plugin-transform-class-properties 类属性定义
+npm install --save-dev babel-plugin-transform-async-generator-functions 异步函数
+#### gulp插件
+npm install gulp-eslint [js检测](#https://www.npmjs.com/package/gulp-eslint)
 npm install gulp-livescript [js编译器](https://www.npmjs.com/package/gulp-livescript)           
 npm install gulp-watch [文件观察](https://www.npmjs.com/package/gulp-watch) 使用超快速chokidar并且发射乙烯基对象的文件观察者。           
 npm install gulp-plumber  --save-dev [抑制错误处理](https://www.npmjs.com/package/gulp-plumber)           
@@ -218,8 +228,7 @@ npm install gulp-sourcemaps --save-dev [源码地图映射](https://www.npmjs.co
 npm install gulp-if  --save-dev [条件判断](https://www.npmjs.com/package/gulp-if)           
 npm install gulp-concat  --save-dev [文件合并](https://www.npmjs.com/package/gulp-concat)           
 npm install gulp-autoprefixer   --save-dev[css 前缀](https://www.npmjs.com/package/gulp-autoprefixer)           
-npm install gulp-react [React jsx语法转换](https://www.npmjs.com/package/gulp-react)           
-npm install gulp-babel babel-preset-env  --save-dev  [es6语法转换](https://www.npmjs.com/package/gulp-babel)           
+npm install gulp-react [React jsx语法转换](https://www.npmjs.com/package/gulp-react)              
 npm install gulp-imagemin  --save-dev  [图片压缩](https://www.npmjs.com/package/gulp-imagemin)           
 npm install gulp.spritesmith-multi [图片合并包装器](https://www.npmjs.com/package/gulp.spritesmith-multi)           
 npm install gulp.spritesmith [图片合并](https://www.npmjs.com/package/gulp.spritesmith)           
@@ -240,8 +249,7 @@ npm install gulp-sort --save-dev [排序](https://www.npmjs.com/package/gulp-sor
 npm install gulp-notify  --save-dev [通知](https://www.npmjs.com/package/gulp-notify)           
 npm install gulp-each  --save-dev [循环文件](https://www.npmjs.com/package/gulp-each)           
 npm install merge2 --save-dev [合并数据流](https://www.npmjs.com/package/merge2)           
-npm install gulp-open --save-dev [打开浏览器](https://www.npmjs.com/package/gulp-open)           
-npm install opn   --save-dev [打开浏览器](https://www.npmjs.com/package/opn)           
+npm install gulp-open --save-dev [打开浏览器](https://www.npmjs.com/package/gulp-open)                    
 npm install shuji  --save-dev [根据source map还原js](https://www.npmjs.com/package/shuji)           
 npm install gulp-debug --save-dev [调试](https://www.npmjs.com/package/gulp-debug)           
 npm install gulp-git --save-dev [git代码管理](https://www.npmjs.com/package/gulp-git)           
