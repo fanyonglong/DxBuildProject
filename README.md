@@ -211,7 +211,11 @@ npm install gulp-lesshint --save-dev [less检测](https://www.npmjs.com/package/
 
 #### babel 
 npm install gulp-babel babel-core babel-preset-env  --save-dev  [es6语法转换](https://www.npmjs.com/package/gulp-babel)   
-npm install babel-eslint --save-dev [babel检测](#https://www.npmjs.com/package/babel-eslint)    
+npm install babel-eslint --save-dev [babel检测](#https://www.npmjs.com/package/babel-eslint)   
+npm install babel-plugin-transform-es2015-modules-amd  --save-dev [模块化](#https://www.npmjs.com/package/babel-plugin-transform-es2015-modules-amd) 
+npm install babel-plugin-transform-es2015-modules-commonjs  --save-dev [模块化](#https://www.npmjs.com/package/babel-plugin-transform-es2015-modules-commonjs) 
+npm install babel-plugin-transform-es2015-modules-systemjs  --save-dev [模块化](#https://www.npmjs.com/package/babel-plugin-transform-es2015-modules-systemjs) 
+npm install babel-plugin-transform-es2015-modules-umd  --save-dev [模块化](#https://www.npmjs.com/package/babel-plugin-transform-es2015-modules-umd) 
 #### babel es2017   
 npm install --save-dev babel-plugin-syntax-object-rest-spread  对象扩展运算符
 npm install --save-dev babel-plugin-transform-class-properties 类属性定义

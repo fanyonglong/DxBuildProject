@@ -1,4 +1,9 @@
 {
     "presets": ["env"],
-    "plugins": ["syntax-object-rest-spread"]    
+    "plugins": [["syntax-object-rest-spread"],["transform-es2015-modules-umd",{
+        "globals": {
+            "dx": "dxpp"
+          },
+        "exactGlobals": true
+    }]]   
 }
