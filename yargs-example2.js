@@ -1,3 +1,4 @@
 // args 共享
-var yargs=require('yargs');
+var argv=require('yargs').boolean('ug').argv;
 
+console.log(argv);
