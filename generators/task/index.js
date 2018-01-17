@@ -21,7 +21,7 @@ module.exports=class extends Generator
         },{
             type:"list",
             name:"taskType",
-            choices:['babel','typescript'],
+            choices:['babel','typescript','less','sass'],
             message:"任务类型",
             default:0,
             validate(val)

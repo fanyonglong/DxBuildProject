@@ -1,0 +1,22 @@
+{
+    
+    "sass for": {
+         "prefix": "for",
+         "body": [
+             "@for $${1|i,index|} from $start through $end {",
+             "\t$0",
+             "}"
+         ],
+         "description": "sass for循环"
+     },
+     "sass each": {
+         "prefix": "each",
+         "body": [
+             "@each $$name in $$list {",
+                "\t$0",
+             "}"
+         ],
+         "description": "sass each 循环"
+     }
+ 
+ }

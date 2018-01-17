@@ -11,6 +11,12 @@ const argv=require('yargs').options({
         type:"boolean",
         describe:"启动浏览器",
         default:false
+    },
+    "watch":{
+        alias:"w",
+        type:"boolean",
+        describe:"监听模式",
+        default:false
     }
 
 }).usage('usage:gulp --t|--task <taskname>').help().argv;
