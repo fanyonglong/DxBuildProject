@@ -1,5 +1,5 @@
 // args 共享
-var argv=require('yargs').boolean('ug').argv;
+var argv=require('yargs').boolean('ug').command('$0 <input> <out>').argv;
 
 console.log(argv);
 

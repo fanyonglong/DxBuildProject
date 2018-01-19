@@ -30,7 +30,7 @@ var yargs=require('yargs');
 
 var argv=yargs.help('info').version('2.0.1').boolean('prod').options({
   size:{
-    type:String,
+    type:'string',
     describe: '请选择符合尺寸',
     choices: ['xs', 's', 'm', 'l', 'xl'],
     default:"s"
@@ -98,7 +98,6 @@ var argv=yargs.help('info').version('2.0.1').boolean('prod').options({
   }, 500);
 }).example('start','请输start').demandCommand(1,'请运行一个服务').global('age',false).wrap(null).argv;
 
-require('./yargs-example2')
 
 console.log(argv);
 
