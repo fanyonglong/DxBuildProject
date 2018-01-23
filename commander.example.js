@@ -28,7 +28,10 @@ var program = require('commander');
 //Cannot find module 'E:\fanyonglong2016\project\DxBuildProject\commander.example-build'
 program
 .usage('<command> [options]')
+.option('-c --config <configfile>', 'config file', val => val.split(','))
 .command('product','llll')
 .command('watch', 'Development mode')
 .command('build', 'Production mode')
 .parse(process.argv)
+
+console.log(program);
