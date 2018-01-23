@@ -155,7 +155,8 @@ npm install --save-dev typescript  gulp-typescript
 npm install del --save-dev  删除文件   
 npm install chalk --save-dev 颜色字体日志   
 npm install run-sequence --save-dev 同步执行gulp任务   
-npm install yargs  --save-dev 参数转换   
+npm install yargs  --save-dev 命令行参数解析   
+npm install commander --save-dev 命令行参数解析
 npm install replace-ext [替换后缀]((https://www.npmjs.com/package/replace-ext)   
 npm install pump --save-dev [串联流处理,错误处理]((https://www.npmjs.com/package/pump)   
 npm install html-minifier [html压缩]((https://www.npmjs.com/package/html-minifier)   
