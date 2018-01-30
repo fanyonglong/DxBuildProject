@@ -1,0 +1,6 @@
+
+@for $i from 2 through 6 {
+    .mjb-label-word#{$i}.control-label {
+      width:$i*13+($i*5)+14px;
+    }
+}
