@@ -8,13 +8,14 @@ const through2=require('through2');
 const del=require('del');
 const buffer=require('buffer');
 const sourceMap = require('source-map');
+var strip = require('gulp-strip-comments');
 gulp.task('clean',(cb)=>{
     del(['./dist/kendo/**','!./dist/kendo']).then((paths)=>{
         cb();
     });
 });
 gulp.task('default',['clean'],()=>{
-        return gulp.src('./assets/kendo/*.map',{base:"assets"}).pipe(gulpPlumber()).pipe(through2.obj(function(chunk, enc, callback){
+        return gulp.src('./kendotemp/*.map').pipe(gulpPlumber()).pipe(through2.obj(function(chunk, enc, callback){
    
            var content=  chunk.contents.toString(enc); //base64 utf-8 buffer
  
@@ -32,7 +33,7 @@ gulp.task('default',['clean'],()=>{
             }
           }
             callback(null,chunk);
-        })).pipe(gulp.dest('./dist'));
+        })).pipe(strip()).pipe(gulp.dest('./dist/kendo'));
 })
 module.exports=function(cb)
 {
