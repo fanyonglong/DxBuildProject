@@ -20,6 +20,16 @@ module.exports=class extends Generator
 
         },{
             type:"list",
+            name:"buildTools",
+            choices:['gulp','rollup'],
+            message:"构建工具",
+            default:0,
+            validate(val)
+            {
+                return val==''?'请选择构建工具':true;
+            }
+        },{
+            type:"list",
             name:"taskType",
             choices:['babel','typescript','less','sass'],
             message:"任务类型",
@@ -31,15 +41,19 @@ module.exports=class extends Generator
         }]).then(argv=>{
                 this.taskName=argv.taskName;
                 this.taskType=argv.taskType;
+                this.buildTools=argv.buildTools;
         });
     }
     writing()
     {
         var {taskType,taskName}=this;
-        this.fs.copyTpl(this.templatePath(taskType,"**/*.js"),this.destinationPath('gulp',taskName),{
+        this.fs.copyTpl(this.templatePath(taskType,"**/*.js"),this.destinationPath(this.buildTools,taskName),{
             taskName
         });
-        fs.mkdirSync(this.destinationPath('src',taskName));
+        if(!fs.existsSync(this.destinationPath('src',taskName)))
+        {
+            fs.mkdirSync(this.destinationPath('src',taskName));
+        }
     }
     end()
     {
