@@ -6,12 +6,14 @@ const babel=require('gulp-babel');
 const concat=require('gulp-concat');
 var merge = require('merge2');
 const eslint=require('gulp-eslint');
+var rollup = require("gulp-rollup");
+var gulpLoadPlugins = require('gulp-load-plugins');
 var browserify = require('gulp-browserify');
 gulp.task('clean',()=>{
-   return del(['./dist/babelruntime/**','!./dist/babelruntime']);
+   return del(['./dist/babel/**','!./dist/babel']);
 });
 gulp.task('eslint',()=>{  
-    return gulp.src('temp/async-validator/src/index.js')
+    return gulp.src('src/babel/**/*.js')
         //  ESLint忽略带有“node_modules”路径的文件。 
         //  所以，最好还是不要忽略目录。 
         //  另外，确保从任务中返回流; 
@@ -31,22 +33,26 @@ gulp.task('eslint',()=>{
         // lint错误，最后返回流和管道failAfterError。 
        .pipe(eslint.failAfterError());
 });
-gulp.task('core-js',()=>{  
-    return gulp.src('node_modules/babel-runtime/core-js/**/*.js',{base:'node_modules/babel-runtime'})
+gulp.task('js',()=>{  
+    return gulp.src('src/babel/**/index.js').pipe(browserify({
+        
+    }))
         .pipe(babel({
             presets: [['env',{
                 targets:{
                     browsers:['last 3 versions']
                 },
-                modules:false,
-               // modules:"amd"
+                modules:false
             }]],
+           // plugins:['transform-es2015-modules-commonjs'],
+         //  plugins:['transform-es2015-modules-umd'],
             babelrc:false,
-        })).pipe(gulp.dest('dist/babelruntime'));
+        }))
+        .pipe(gulp.dest('dist/babel'));
 });
 
      
  module.exports=function(cb)
  {
-     runSequence('clean','core-js',cb);
+     runSequence('clean','eslint','js',cb);
  }

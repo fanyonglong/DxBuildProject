@@ -1,5 +1,10 @@
 {
-    "presets": ["env"],
+    "presets": [["env",{
+        "targets":{
+            "browsers":["last 3 versions"],
+            "modules":false
+        }
+    }]],
     "plugins": [["syntax-object-rest-spread"],["transform-es2015-modules-umd",{
         "globals": {
             "dx": "dxpp"

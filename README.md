@@ -278,6 +278,7 @@ npm install --save-dev babel-plugin-syntax-object-rest-spread  对象扩展运�
 npm install --save-dev babel-plugin-transform-class-properties 类属性定义
 npm install --save-dev babel-plugin-transform-async-generator-functions 异步函数
 #### gulp插件
+npm install gulp-load-plugins[自动加载插件](#https://www.npmjs.com/package/gulp-load-plugins)
 npm install gulp-eslint [js检测](#https://www.npmjs.com/package/gulp-eslint)
 npm install gulp-livescript [js编译器](#https://www.npmjs.com/package/gulp-livescript)           
 npm install gulp-watch [文件观察](#https://www.npmjs.com/package/gulp-watch) 使用超快速chokidar并且发射乙烯基对象的文件观察者。           
