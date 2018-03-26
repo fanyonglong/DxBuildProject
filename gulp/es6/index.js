@@ -7,6 +7,7 @@ const concat=require('gulp-concat');
 var merge = require('merge2');
 const eslint=require('gulp-eslint');
 var browserify = require('gulp-browserify');
+var glob=require('glob');
 gulp.task('clean',()=>{
    return del(['./dist/babelruntime/**','!./dist/babelruntime']);
 });
@@ -32,7 +33,7 @@ gulp.task('eslint',()=>{
        .pipe(eslint.failAfterError());
 });
 gulp.task('core-js',()=>{  
-    return gulp.src('node_modules/babel-runtime/core-js/**/*.js',{base:'node_modules/babel-runtime'})
+    return gulp.src('node_modules/core-js/fn/**/*.js',{base:'node_modules/core-js'})
         .pipe(babel({
             presets: [['env',{
                 targets:{
@@ -42,9 +43,22 @@ gulp.task('core-js',()=>{
                // modules:"amd"
             }]],
             babelrc:false,
-        })).pipe(gulp.dest('dist/babelruntime'));
+        })).pipe(gulp.dest('dist/core-js'));
 });
+gulp.task('core-js2',()=>{
 
+    return glob.src('node_modules/core-js/fn/**/*.js',{base:'node_modules/core-js'})
+    .pipe(babel({
+        presets: [['env',{
+            targets:{
+                browsers:['last 3 versions']
+            },
+            modules:false,
+           // modules:"amd"
+        }]],
+        babelrc:false,
+    })).pipe(gulp.dest('dist/core-js'));
+})
      
  module.exports=function(cb)
  {
