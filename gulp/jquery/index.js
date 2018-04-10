@@ -44,19 +44,27 @@ gulp.task('eslint',()=>{
 });
 gulp.task('js',(cb)=>{  
 
-    console.log(argv.module);
-    var workerProcess = child_process.exec('node node_modules/requirejs/bin/r.js -o gulp/jquery/r.config.js',{
+    requirejs.optimize({
+       // appDir: "./",
+       // baseUrl:'./src/jquery/',
+        baseUrl: './src/jquery/',
+        out:'./dist/jquery/'+argv.module+'.js',
+        //dir:"",
+        optimize:'none',
+        name: argv.module,
+        // modules:[{
+        //     name:'deferred'
+        // }]
 
-    },(err)=>{
-            if(err)
-            {
-                console.log('构建失败');
-                cb();
-                return;
-            }
-            console.log('构建完成');
-    })
+    },()=>{
 
+        console.log('完成');
+        cb();
+    },(e)=>{
+        console.log(e);
+        cb();
+    });
+    
 });
 
      
