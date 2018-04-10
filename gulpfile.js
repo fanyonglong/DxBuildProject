@@ -1,11 +1,12 @@
 const gulp=require('gulp');
-const argv=require('yargs').options({
+const argv=require('yargs').help().version().options({
     "task":{
         alias:"t",
         type:"string",
         describe:"执行的任务名称",
         default:'',
-        requiresArg:true
+        requiresArg:true,
+       // demandOption:true
     },
     "start":{
         type:"boolean",
@@ -19,7 +20,7 @@ const argv=require('yargs').options({
         default:false
     }
 
-}).usage('usage:gulp --t|--task <taskname>').help().argv;
+}).usage('usage:gulp --t|--task <taskname>').argv;
 const runSequence=require('run-sequence');
 const browserSync=require('browser-sync').create();
 const del = require('del');

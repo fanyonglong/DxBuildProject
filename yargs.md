@@ -1,3 +1,4 @@
+. [高级命令](#高级命令)
 API
 =======
 
@@ -207,7 +208,7 @@ yargs
   .help()
   .argv
 ```
-
+[查看](#commands)
 Please see [Advanced Topics: Commands](https://github.com/yargs/yargs/blob/master/docs/advanced.md#commands) for a thorough
 discussion of the advanced features exposed in the Command API.
 
@@ -1191,3 +1192,468 @@ const argv = require('yargs')
 格式化用法输出以包装在columns许多列中。
 
 默认情况下，换行将被设置为Math.min(80, windowWidth)。使用.wrap(null)指定没有列的限制（没有右对齐）。使用.wrap(yargs.terminalWidth())最大化yargs的使用说明的宽度。
+
+
+
+## 高级命令
+# Advanced Topics
+
+<a name="commands"></a>
+## Commands
+
+Yargs为构建模块化命令驱动应用程序提供了一套强大的工具。
+在本节中，我们将介绍该API中的一些高级功能：
+
+### Default Commands
+
+要指定默认命令，请使用字符串`*`或`$ 0`。 默认命令
+将在所提供的位置参数匹配未知时运行
+命令。tldr; 默认命令允许你定义你的入口点
+应用程序使用类似于API的子命令。
+
+```js
+const argv = require('yargs')
+  .command('$0', 'the default command', () => {}, (argv) => {
+    console.log('this command will be run by default')
+  })
+```
+
+上面定义的命令将在程序执行时执行
+使用`./my-cli.js --x = 22`运行。
+
+默认命令也可以用作命令别名，如下所示：
+```js
+const argv = require('yargs')
+  .command(['serve', '$0'], 'the serve command', () => {}, (argv) => {
+    console.log('this command will be run by default')
+  })
+```
+
+上面定义的命令将在程序执行时执行
+使用`./my-cli.js --x = 22`运行，或者使用`./my-cli.js服务--x = 22`运行。
+### Positional Arguments
+
+命令可以接受_optional_和_required_位置参数。 需要
+位置参数的形式为<foo>`和可选参数
+采取`[bar]`的形式。 解析后的位置参数将被填入
+`argv`:
+
+```js
+yargs.command('get <source> [proxy]', 'make a get HTTP request')
+  .help()
+  .argv
+```
+
+#### Positional Argument Aliases
+
+可以使用`|`字符为位置参数提供别名。
+作为一个例子，假设我们的应用程序允许用户名_or_
+作为第一个参数的电子邮件：
+
+```js
+yargs.command('get <username|email> [password]', 'fetch a user by username or email.')
+  .help()
+  .argv
+```
+
+通过这种方式，`argv.username`和`argv.email`都将被填充
+命令执行时的值相同。
+
+#### Variadic Positional Arguments
+
+最后一个位置参数可以选择性地接受一个数组
+值，通过使用`..`运算符：
+```js
+yargs.command('download <url> [files..]', 'download several files')
+  .help()
+  .argv
+```
+
+#### Describing Positional Arguments
+
+您可以在命令的构建器函数中使用方法[`.positional（）`]（/ docs / api.md＃positional基钥-opt）来描述和配置一个位置参数：
+
+```js
+yargs.command('get <source> [proxy]', 'make a get HTTP request', (yargs) => {
+  yargs.positional('source', {
+    describe: 'URL to fetch content from',
+    type: 'string',
+    default: 'http://www.google.com'
+  }).positional('proxy', {
+    describe: 'optional proxy URL'
+  })
+})
+.help()
+.argv
+```
+
+### Command Execution
+当在命令行上给出命令时，yargs将执行以下操作：
+
+1.将命令推入当前上下文
+2.重置非全局配置
+3.通过`builder`应用命令配置，如果有的话
+4.从命令行解析和验证参数，包括位置参数
+5.如果验证成功，运行`handler`函数（如果给出的话）
+6.从当前上下文弹出命令
+
+###命令别名
+
+您可以通过放置命令及其全部命令来定义命令的别名
+别名到数组中。
+
+或者，命令模块可以指定“别名”属性，可以是
+一个字符串或一个字符串数组。通过`command`属性定义的所有别名
+和`aliases`属性将被连接在一起。
+
+数组中的第一个元素被认为是canonical命令，可能
+定义位置参数，并且数组中的其余元素是
+考虑过别名。别名从规范命令继承位置参数，
+因此在别名中定义的任何位置参数都会被忽略。
+
+如果命令中给出了规范命令或其任何别名
+行，该命令将被执行。
+```js
+#!/usr/bin/env node
+require('yargs')
+  .command(['start [app]', 'run', 'up'], 'Start up an app', {}, (argv) => {
+    console.log('starting up the', argv.app || 'default', 'app')
+  })
+  .command({
+    command: 'configure <key> [value]',
+    aliases: ['config', 'cfg'],
+    desc: 'Set a config variable',
+    builder: (yargs) => yargs.default('value', 'true'),
+    handler: (argv) => {
+      console.log(`setting ${argv.key} to ${argv.value}`)
+    }
+  })
+  .demandCommand()
+  .help()
+  .wrap(72)
+  .argv
+```
+
+```
+$ ./svc.js help
+Commands:
+  start [app]              Start up an app            [aliases: run, up]
+  configure <key> [value]  Set a config variable  [aliases: config, cfg]
+
+Options:
+  --help  Show help                                            [boolean]
+
+$ ./svc.js cfg concurrency 4
+setting concurrency to 4
+
+$ ./svc.js run web
+starting up the web app
+```
+
+### Providing a Command Module
+对于复杂的命令，您可以将逻辑放入模块中。 一个模块
+只需要导出：
+
+*`exports.command`：当在命令行上给出时执行此命令的字符串（或字符串数组），第一个字符串可能包含位置参数
+*`exports.aliases`：代表`exports.command`的别名的字符串（或单个字符串）的数组，在别名中定义的位置参数被忽略
+*`exports.describe`：字符串用作帮助文本中命令的描述，对于隐藏命令使用'false'
+*`exports.builder`：声明命令接受的选项的对象，或接受并返回yargs实例的函数
+*`exports.handler`：将被传递解析的argv的函数。
+```js
+// my-module.js
+exports.command = 'get <source> [proxy]'
+
+exports.describe = 'make a get HTTP request'
+
+exports.builder = {
+  banana: {
+    default: 'cool'
+  },
+  batman: {
+    default: 'sad'
+  }
+}
+
+exports.handler = function (argv) {
+  // do something with argv.
+}
+```
+
+You then register the module like so:
+
+```js
+yargs.command(require('my-module'))
+  .help()
+  .argv
+```
+或者，如果模块不输出`command`和`describe`（或者你只是想重写它们）：
+
+```js
+yargs.command('get <source> [proxy]', 'make a get HTTP request', require('my-module'))
+  .help()
+  .argv
+```
+
+.commandDir(directory, [opts])
+------------------------------
+从相对于调用此方法的模块的目录应用命令模块。
+
+这使您可以将多个命令组织到它们自己的模块下
+单个目录并且一次全部应用而不是调用
+.command（require（'./ dir / module'））`多次。
+
+默认情况下，它忽略子目录。这样你就可以使用一个目录
+结构来表示您的命令层次结构，其中每个命令都应用它
+在其构建器函数中使用此方法的子命令。看下面的例子。
+
+请注意，yargs假定给定目录中的所有模块都是命令模块
+如果遇到非命令模块将会出错。在这种情况下，你
+可以将您的模块移动到不同的目录或使用`exclude`或
+`visit`选项手动将其过滤掉。更多关于下面的内容。
+
+`directory`是一个相对目录路径，为一个字符串（必需）。
+
+`opts`是一个选项对象（可选）。以下选项是有效的：
+
+- `recurse`：布尔值，默认`false`
+
+    在所有子目录中查找命令模块并将其作为拼合应用
+    （非分层）列表。
+
+- `extensions`：字符串数组，默认`['js']`
+
+    需要命令模块时查找的文件类型。
+
+- 'visit'：功能
+
+    为每个遇到的命令模块调用同步函数。接受
+    `commandObject`，`pathToFile`和`filename`作为参数。返回
+    `commandObject`包含命令;任何虚假值排除/跳过它。
+
+- `include`：RegExp或函数
+
+    将某些模块列入白名单。有关详细信息，请参阅[需要目录白名单]（https://www.npmjs.com/package/require-directory#whitelisting）。
+
+- `exclude`：RegExp或函数
+
+    黑名单某些模块。有关详细信息，请参见[`require-directory` blacklisting]（https://www.npmjs.com/package/require-directory#blacklisting）。
+
+### Example command hierarchy using `.commandDir()`
+
+Desired CLI:
+
+```sh
+$ myapp --help
+$ myapp init
+$ myapp remote --help
+$ myapp remote add base http://yargs.js.org
+$ myapp remote prune base
+$ myapp remote prune base fork whatever
+```
+
+Directory structure:
+
+```
+myapp/
+├─ cli.js
+└─ cmds/
+   ├─ init.js
+   ├─ remote.js
+   └─ remote_cmds/
+      ├─ add.js
+      └─ prune.js
+```
+
+cli.js:
+
+```js
+#!/usr/bin/env node
+require('yargs')
+  .commandDir('cmds')
+  .demandCommand()
+  .help()
+  .argv
+```
+
+cmds/init.js:
+
+```js
+exports.command = 'init [dir]'
+exports.desc = 'Create an empty repo'
+exports.builder = {
+  dir: {
+    default: '.'
+  }
+}
+exports.handler = function (argv) {
+  console.log('init called for dir', argv.dir)
+}
+```
+
+cmds/remote.js:
+
+```js
+exports.command = 'remote <command>'
+exports.desc = 'Manage set of tracked repos'
+exports.builder = function (yargs) {
+  return yargs.commandDir('remote_cmds')
+}
+exports.handler = function (argv) {}
+```
+
+cmds/remote_cmds/add.js:
+
+```js
+exports.command = 'add <name> <url>'
+exports.desc = 'Add remote named <name> for repo at url <url>'
+exports.builder = {}
+exports.handler = function (argv) {
+  console.log('adding remote %s at url %s', argv.name, argv.url)
+}
+```
+
+cmds/remote_cmds/prune.js:
+
+```js
+exports.command = 'prune <name> [names..]'
+exports.desc = 'Delete tracked branches gone stale for remotes'
+exports.builder = {}
+exports.handler = function (argv) {
+  console.log('pruning remotes %s', [].concat(argv.name).concat(argv.names).join(', '))
+}
+```
+
+<a name="configuration"></a>
+## Building Configurable CLI Apps
+纱线的其中一个目标是研究在食品中常见的做法
+JavaScript CLI社区，并使其易于应用
+约定到您自己的应用程序。
+
+已经出现的一组有用的约定是关于应用程序的
+允许用户扩展和定制他们的功能。
+### .rc files
+对于图书馆来说很常见，例如[Babel]（https://babeljs.io/docs/usage/babelrc/），[ESLint]（https://github.com/eslint/eslint#configuration），以便您
+通过填充一个`.rc`文件来提供配置。
+
+Yargs'[`config（）`](/docs/api.md＃config)与模块[find-up]（https://www.npmjs.com/package/find-up）结合使用， 至
+实现`.rc`功能：
+```js
+const findUp = require('find-up')
+const fs = require('fs')
+const configPath = findUp.sync(['.myapprc', '.myapprc.json'])
+const config = configPath ? JSON.parse(fs.readFileSync(configPath)) : {}
+const argv = require('yargs')
+  .config(config)
+  .argv
+```
+
+### Providing Configuration in Your package.json
+
+Another common practice is to allow users to provide configuration via
+a reserved field in the package.json. You can configure [nyc](https://github.com/istanbuljs/nyc#configuring-nyc) or [babel](https://babeljs.io/docs/usage/babelrc/#lookup-behavior), for instance,
+using the `nyc` and `babel` key respectively:
+
+```json
+{
+  "nyc": {
+    "watermarks": {
+      "lines": [80, 95],
+      "functions": [80, 95],
+      "branches": [80, 95],
+      "statements": [80, 95]
+    }
+  }
+}
+```
+
+Yargs gives you this functionality using the [`pkgConf()`](/docs/api.md#config)
+method:
+
+```js
+const argv = require('yargs')
+  .pkgConf('nyc')
+  .argv
+```
+
+### Creating a Plugin Architecture
+
+Both [`pkgConf()`](/docs/api.md#config) and [`config()`](/docs/api.md#config) support
+the `extends` keyword. `extends` allows you to inherit configuration from [other npm modules](https://www.npmjs.com/package/@istanbuljs/nyc-config-babel), making it
+possible to build plugin architectures similar to [Babel's presets](https://babeljs.io/docs/plugins/#presets):
+
+```json
+{
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-babel"
+  }
+}
+```
+
+<a name="customizing"></a>
+## Customizing Yargs' Parser
+
+Not everyone always agrees on how `process.argv` should be interpreted;
+using the `yargs` stanza in your `package.json` you can turn on and off
+some of yargs' parsing features:
+
+```json
+{
+  "yargs": {
+    "short-option-groups": true,
+    "camel-case-expansion": true,
+    "dot-notation": true,
+    "parse-numbers": true,
+    "boolean-negation": true
+  }
+}
+```
+
+See the [yargs-parser](https://github.com/yargs/yargs-parser#configuration) module
+for detailed documentation of this feature.
+
+## Middleware
+
+Sometimes you might want to transform arguments before they reach the command handler.
+For example, you perhaps you want to validate that credentials have been provided and otherwise load credentials from a file.
+
+Middleware is simply a stack of functions, each of which is passed the the current parsed arguments, which it can in turn update by adding values, removing values, or overwriting values.
+
+Diagram:
+
+```
+                        --------------         --------------        ---------
+stdin ----> argv ----> | Middleware 1 | ----> | Middleware 2 | ---> | Command |
+                        --------------         --------------        ---------
+```
+
+### Example Credentials Middleware
+
+In this example, our middleware will check if the `username` and `password` is provided. If not, it will load them from `~/.credentials`, and fill in the `argv.username` and `argv.password` values.
+
+#### Middleware function
+
+```
+const normalizeCredentials = (argv) => {
+  if (!argv.username || !argv.password) {
+    const credentials = JSON.parse(fs.readSync('~/.credentials'))
+    return credentials
+  }
+  return {}
+}
+```
+
+#### yargs parsing configuration
+
+```
+var argv = require('yargs')
+  .usage('Usage: $0 <command> [options]')
+  .command('login', 'Authenticate user', (yargs) =>{
+        return yargs.option('username')
+                    .option('password')
+      } ,(argv) => {
+        authenticateUser(argv.username, argv.password)
+      }, 
+      [normalizeCredentials]
+     )
+  .argv;
+```

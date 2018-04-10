@@ -47,6 +47,7 @@
     "lesshint-reporter-stylish": "^2.0.1",
     "merge2": "^1.2.0",
     "opn": "^5.1.0",
+    "requirejs": "^2.3.5",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
