@@ -56,6 +56,7 @@ type：以下字符串之一
 'number'：代名词number: true，见number()
 'string'：代名词string: true，见string()
 */
+//.strict() 不接受未知参数
 const CONFIG_GROUP = "Config options:";
 var args=yargs.options({
     name:{
@@ -89,8 +90,8 @@ var args=yargs.options({
         requiresArg: true
     }
     //强制参数必填
-}).demandOption([],'请输入参数').argv;
-//console.log(args);
+}).demandOption([],'请输入参数').strict().argv;
+console.log(args);
 // 强制参数必填
 //yargs.demandOption(['name'],'请输入参数');
 
