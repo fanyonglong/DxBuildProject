@@ -32,7 +32,7 @@ gulp.task('eslint',()=>{
        .pipe(eslint.failAfterError());
 });
 gulp.task('js',()=>{  
-    return gulp.src('temp/canvas动画/*.png').pipe(imagemin())
+    return gulp.src('temp/canvas动画/*.png').pipe(imagemin([imagemin.optipng()]))
         .pipe(gulp.dest('dist/imageoptimize'));
 });
 
