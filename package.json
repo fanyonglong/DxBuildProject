@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "yo": "npm install yo yeoman-generator -g",
+    "testglob":"node testglob.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

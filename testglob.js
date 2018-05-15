@@ -196,7 +196,7 @@ npm run bench
 npm run prof
 元数据
 */
-glob('./src/babel/**/*.js',{
+glob('./temp/canvas动画/*.@(png|jpg)',{
     nodir:true
 },function(err,files){
     if(err)

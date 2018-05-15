@@ -32,12 +32,26 @@ gulp.task('eslint',()=>{
        .pipe(eslint.failAfterError());
 });
 gulp.task('js',()=>{  
-    return gulp.src('temp/canvas动画/*.png').pipe(imagemin([imagemin.optipng()]))
+    return gulp.src('./temp/canvas动画/*.@(png|jpg)').pipe(imagemin())
         .pipe(gulp.dest('dist/imageoptimize'));
 });
 
+gulp.task('image',()=>{
+    const imagemin = require('imagemin');
+    const imageminJpegtran = require('imagemin-jpegtran');
+  //  const imageminJpegoptim=require('imagemin-jpegoptim')
      
+    imagemin(['./temp/canvas动画/*.{jpg,png}'], 'dist/imageoptimize', {
+        plugins: [
+            imageminJpegtran(),
+          //  imageminJpegoptim()
+        ]
+    }).then(files => {
+        console.log(files);
+        //=> [{data: <Buffer 89 50 4e â€¦>, path: 'build/images/foo.jpg'}, â€¦]
+    });
+})
  module.exports=function(cb)
  {
-     runSequence('clean','js',cb);
+     runSequence('clean','image',cb);
  }
