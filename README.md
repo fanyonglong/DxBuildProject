@@ -196,6 +196,7 @@ npm install opn   --save-dev [打开浏览器](#https://www.npmjs.com/package/op
         wrap_iife（默认false） - 传递true包装立即调用函数表达式。请参阅 ＃640了解更多详情。
 
 ##### 文件流
+npm install vinyl-source-stream 
 npm install glob-stream) [readable流](#https://www.npmjs.com/package/glob-stream)   
 npm install through2 --save-dev  [操作流](#https://www.npmjs.com/package/through2)    
 npm install through2-filter --save-dev [过滤流](#https://www.npmjs.com/package/through2-filter)    
@@ -278,6 +279,7 @@ npm install --save-dev babel-plugin-syntax-object-rest-spread  对象扩展运�
 npm install --save-dev babel-plugin-transform-class-properties 类属性定义
 npm install --save-dev babel-plugin-transform-async-generator-functions 异步函数
 #### gulp插件
+npm install gulp-streamify[包准流](#https://www.npmjs.com/package/gulp-streamify)
 npm install gulp-tap[轻松进入管道](#https://www.npmjs.com/package/gulp-tap)
 npm install gulp-load-plugins[自动加载插件](#https://www.npmjs.com/package/gulp-load-plugins)
 npm install gulp-eslint [js检测](#https://www.npmjs.com/package/gulp-eslint)
