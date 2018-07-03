@@ -1,4 +1,5 @@
 const gulp=require('gulp');
+let rename=require('gulp-rename')
 const argv=require('yargs').help().version().options({
     "task":{
         alias:"t",
@@ -26,6 +27,18 @@ const browserSync=require('browser-sync').create();
 const del = require('del');
 const {exec}=require('child_process');
 var log=require('./ultil')
+
+
+
+
+
+gulp.task('dist',()=>{
+    gulp.src(['./node_modules/d3-*/@(dist|build)/d3-*.js','!./node_modules/d3-*/@(dist|build)/d3-*.min.js'],{
+    }).pipe(rename(function (path) {
+        path.dirname = "";
+      })).pipe(gulp.dest('./dist'))
+
+})
 
 gulp.task('default',()=>{
     if(argv.task=='')
