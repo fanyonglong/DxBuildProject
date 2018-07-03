@@ -17,7 +17,7 @@
 ### gulp API
 
 #### glob 语法
-```
+
 “Globs”是你ls *.js在命令行中输入内容时所键入的模式，或者放在build/*一个.gitignore文件中。
 在解析路径部分模式之前，支撑部分被扩展为一个集合。带括号的部分以任何数量的以逗号分隔的部分开始{和结束}。支撑部分可能包含斜线字符，所以a{/b/c,bcd}会扩展成a/b/c和abcd。
 以下字符在路径部分使用时具有特殊的魔法含义：
@@ -30,7 +30,15 @@
 *(a|b|c) 匹配零次或多次出现的模式
 @(pattern|pat*|pat?erN) 完全匹配提供的模式之一
 **如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
- ```
+```js 
+gulp.src('client/js/**/*.js') // 匹配 'client/js/somedir/somefile.js' 并且将 `base` 解析为 `client/js/`
+  .pipe(minify())
+  .pipe(gulp.dest('build'));  // 写入 'build/somedir/somefile.js'
+
+gulp.src('client/js/**/*.js', { base: 'client' })
+  .pipe(minify())
+  .pipe(gulp.dest('build'));  // 写入 'build/js/somedir/somefile.js'
+```
 
 #### [gulp.src](#https://www.gulpjs.com.cn/docs/api/)    
 gulp.src(globs[, options])         
