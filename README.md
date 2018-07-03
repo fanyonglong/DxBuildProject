@@ -197,7 +197,6 @@ npm install opn   --save-dev [打开浏览器](#https://www.npmjs.com/package/op
 
 ##### 文件流
 npm install vinyl-source-stream 
-npm install glob-stream) [readable流](#https://www.npmjs.com/package/glob-stream)   
 npm install through2 --save-dev  [操作流](#https://www.npmjs.com/package/through2)    
 npm install through2-filter --save-dev [过滤流](#https://www.npmjs.com/package/through2-filter)    
 npm install through2-map --save-dev [修改流](#https://www.npmjs.com/package/through2-map)   
@@ -228,7 +227,9 @@ npm install through2 through2-filter through2-map --save-dev
 
 ##### glob文件
 npm install globby  [基于glob模式匹配文件](#https://www.npmjs.com/package/globby)   
-npm install glob --save-dev  [模式匹配文件](#https://www.npmjs.com/package/glob)    
+npm install glob --save-dev  [模式匹配文件](#https://www.npmjs.com/package/glob)
+npm install glob-stream) [readable流](#https://www.npmjs.com/package/glob-stream)       
+
 ```javascript 
 var glob = require("glob")
 
@@ -250,6 +251,15 @@ glob("**/*.js", options, function (er, files) {
 *(a|b|c) 匹配零次或多次出现的模式
 @(pattern|pat*|pat?erN) 完全匹配提供的模式之一
 **如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
+
+var gs = require('glob-stream');
+ 
+//将glob字符串或glob字符串数组作为第一个参数，将options对象作为第二个参数。返回包含对象流cwd，base和path性能。
+var readable = gs('./files/**/*.coffee', { /* options */ });
+ 
+var writable = /* your WriteableStream */
+ 
+readable.pipe(writable);
 ```
 
 
