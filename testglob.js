@@ -1,5 +1,5 @@
 const glob=require('glob');
-
+const micromatch=require('micromatch')
 /*
 用法
 用npm安装
