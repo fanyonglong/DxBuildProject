@@ -103,6 +103,11 @@ opts
 类型： Object
 
 传给 gaze 的参数。
+options 传入的选项对象。
+interval {integer}传递给的间隔 fs.watchFile
+debounceDelay {integer}对于同一文件/事件连续调用的事件的延迟（以毫秒为单位）
+mode{string}强制观看模式。无论是'auto'（默认值）， 'watch'（力原生的事件），或'poll'（力统计轮询）。
+cwd{string}当前基于文件模式的工作目录。默认是process.cwd()。
 
 tasks
 类型： Array
