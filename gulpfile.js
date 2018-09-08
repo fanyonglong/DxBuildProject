@@ -9,6 +9,13 @@ const argv=require('yargs').help().version().options({
         requiresArg:true,
        // demandOption:true
     },
+    "build":{
+        alias:"b",
+        describe:"构建工具",
+        choices: ['gulp','rollup'],
+        default:'gulp'
+       // demandOption:true
+    },
     "start":{
         type:"boolean",
         describe:"启动浏览器",
@@ -39,11 +46,32 @@ gulp.task('dist',()=>{
       })).pipe(gulp.dest('./dist'))
 
 })
+const rollup=require('rollup');
+async function buildRollup(input,output){
+     const bundle = await rollup.rollup(input);  
+    await bundle.write(output);
+}
 
 gulp.task('default',()=>{
     if(argv.task=='')
     {
         log.red('请输入你的任务名称');
+        return;
+    }
+    if(argv.build=='rollup'){
+        try{
+            let exec=require('./rollup/'+argv.task);
+            if(typeof exec=='function'){
+                log.green('开始执行构建任务');
+                exec(argv,(r)=>{
+                    buildRollup(r.input,r.output).then(()=>{
+                        log.green('构建完成');
+                        })
+                });
+            }
+        }catch(e){
+            log.red(e);
+        }
         return;
     }
     try{

@@ -5,7 +5,8 @@
   "main": "index.js",
   "files": [
     "module",
-    "task"
+    "task",
+    "rollup"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +16,6 @@
   ],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

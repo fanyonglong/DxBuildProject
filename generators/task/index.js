@@ -21,7 +21,7 @@ module.exports=class extends Generator
         },{
             type:"list",
             name:"buildTools",
-            choices:['gulp','rollup'],
+            choices:['gulp'],
             message:"构建工具",
             default:0,
             validate(val)
