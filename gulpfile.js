@@ -60,6 +60,7 @@ gulp.task('default',()=>{
     }
     if(argv.build=='rollup'){
         try{
+            console.log(argv.task);
             let exec=require('./rollup/'+argv.task);
             if(typeof exec=='function'){
                 log.green('开始执行构建任务');
@@ -70,7 +71,7 @@ gulp.task('default',()=>{
                 });
             }
         }catch(e){
-            log.red(e);
+            log.red('构建异常:'+e);
         }
         return;
     }
