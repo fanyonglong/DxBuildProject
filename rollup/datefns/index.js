@@ -7,16 +7,16 @@ var  commonjs=require('rollup-plugin-commonjs');
 module.exports=function(arg,cb){
   var result={};
   result.input={
-    input: 'F:/fanyonglong/dxProjects/date-fns/src/index.js',
+    input: 'F:/fanyonglong/dxProjects/sylvester/src/exports.js',
     plugins: [
       resolve(),
       commonjs(),
     ]
   }
   result.output={
-    file: path.resolve(root, 'dist/datefns/index.js'),
+    file: path.resolve(root, 'dist/sylvester/sylvester.js'),
     format: 'umd',
-    name:'datefns',
+    name:'sylvester',
     exports:'named',
     sourcemap:false,
   }
