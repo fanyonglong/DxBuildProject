@@ -7,18 +7,26 @@ var  commonjs=require('rollup-plugin-commonjs');
 module.exports=function(arg,cb){
   var result={};
   result.input={
-    input: 'F:/fanyonglong/dxProjects/sylvester/src/exports.js',
+    input: 'F:/fanyonglong/dxProjects/bezierjs/index.js',
     plugins: [
       resolve(),
-      commonjs(),
+      commonjs({
+        namedExports: {
+          //左手边可以是绝对路径，也可以是路径。
+          //相对于当前目录或名称
+          //NoDEi模块中的一个模块
+          //'F:/fanyonglong/dxProjects/bezierjs/lib/bezier.js': ['__moduleExports']
+        }
+      }),
     ]
   }
   result.output={
-    file: path.resolve(root, 'dist/sylvester/sylvester.js'),
+    file: path.resolve(root, 'dist/bezierjs/bezierjs.js'),
     format: 'umd',
-    name:'sylvester',
-    exports:'named',
+    name:'bezierjs',
+    exports:'auto',
     sourcemap:false,
+    strict:true
   }
   cb(result);
 }
