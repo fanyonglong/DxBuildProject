@@ -58,6 +58,7 @@
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.1.6",
     "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-typescript": "^1.2.0",
     "run-sequence": "^2.2.0",
     "through2": "^2.0.3",
     "typescript": "^2.6.2",

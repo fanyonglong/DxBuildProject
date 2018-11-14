@@ -6,7 +6,8 @@
   "files": [
     "module",
     "task",
-    "rollup"
+    "rollup",
+    "browserify"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -6,7 +6,7 @@
   - [用户交互](#用户交互)
 ## GULP 打包编译
 ### 打包工具
-- Browserify
+- [Browserify](#Browserify)
 - Duo
 - Grunt
 - [Gulp](#gulp插件)
@@ -732,3 +732,4 @@ class extends Generator {
   }
 }
 ```
+## Browserify
