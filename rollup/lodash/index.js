@@ -6,6 +6,7 @@ var  commonjs=require('rollup-plugin-commonjs');
 /**
  * npm i -g lodash-cli
  * lodash include=template -o  ../dist/index.js
+ * lodash category=string -o ../dist/string.js
  * 
  * -c，--stdout................将输出写入标准输出
 -d，--development.....只写非缩小开发输出
@@ -26,6 +27,8 @@ lod
 lodash include=each,filter,map
 使用该minus命令传递逗号分隔的函数/类别名称以从构建中删除。
 lodash minus=result,shuffle
+使用该plus命令传递逗号分隔的函数/类别名称以添加到构建。
+lodash category = array plus = random，template
 
   core创建一个4 kB版本
    modularize使用lodash拆分成模块创建一个构建
