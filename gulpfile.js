@@ -7,14 +7,14 @@ const argv=require('yargs').help().version().options({
         describe:"执行的任务名称",
         default:'',
         requiresArg:true,
-       // demandOption:true
+        demandOption:true
     },
     "build":{
         alias:"b",
         describe:"构建工具",
         choices: ['gulp','rollup'],
-        default:'gulp'
-       // demandOption:true
+        default:'gulp',
+        demandOption:true
     },
     "start":{
         type:"boolean",

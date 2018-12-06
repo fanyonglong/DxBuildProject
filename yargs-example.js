@@ -141,7 +141,7 @@ conflicts：字符串或对象，需要某些键不被设置，请参阅 conflic
 count：布尔型，将选项解释为布尔型标志的计数，请参阅 count()
 default：值，为该选项设置一个默认值，参见 default()
 defaultDescription：字符串，在帮助内容中使用此描述作为默认值，请参阅 default()
-demandOption：布尔或字符串，要求给出的选项，可选的错误消息，请参阅 demandOption()
+demandOption：布尔或字符串，要求给出的选项，可选的错误消息，请参阅 demandOption() 必项选
 desc/ describe/ description：字符串，该选项描述的帮助内容，请参阅describe()
 global：布尔型，表示在调用命令时不应该重置该键global()
 group：字符串，当显示使用说明时，将该选项置于另一个组标题下，请参阅 group()
@@ -150,7 +150,7 @@ implies：字符串或对象，需要设置某些键，请参阅 implies()
 nargs：number，指定该选项应该消耗多少个参数，请参阅 nargs()
 normalize：布尔型，应用于path.normalize()该选项，请参阅normalize()
 number：布尔值，解释选项作为一个数字， number()
-requiresArg：布尔值，要求用值指定选项，参见 requiresArg()
+requiresArg：布尔值，要求用值指定选项，参见 requiresArg()可以不用设置，但是设置就必须指定值
 skipValidation：布尔型，如果选项存在，则跳过验证，请参阅 skipValidation()
 string：布尔型，将选项解释为字符串，请参阅 string()
 type：以下字符串之一, 转换值类型
