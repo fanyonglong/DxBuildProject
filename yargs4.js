@@ -4,9 +4,11 @@ var yargs=require('yargs');
 var argv=yargs.options({
     "task":{
         alias:"t",
-        type:["string",'boolean'],
+        type:['string','boolean'],
+        default:'commonjs',
         describe:"执行的任务名称",
-       // requiresArg:false, // 可以不用设置，但是设置就必须指定值
+        //skipValidation:true,
+        requiresArg:true, // 可以不用设置，但是设置就必须指定值
         demandOption:true // 必项选
     },
     "build":{
@@ -16,5 +18,12 @@ var argv=yargs.options({
         default:'gulp',
         demandOption:true
     },
+}).coerce('task',function(v){
+    if(v=='false'){
+        return false;
+    }else if(v=='true'){
+        return true
+    }
+    return v;
 }).argv
 console.log(argv)
