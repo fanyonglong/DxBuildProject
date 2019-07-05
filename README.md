@@ -1,4 +1,8 @@
 "# DxBuildProject" 
+```bash
+$ npx father-build --esm --cjs --umd.name MyLibriry --file index src/index.js
+```
+
 # 项目构建
 - [生成器](#生成器)
   - [扩展生成器](#扩展生成器)
