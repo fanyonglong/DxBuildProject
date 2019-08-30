@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "\"# DxBuildProject\"",
   "scripts": {
+    "g":"gulp",
     "yo": "npm install yo yeoman-generator -g",
     "testglob": "node testglob.js",
     "test": "echo \"Error: no test specified\" && exit 1"

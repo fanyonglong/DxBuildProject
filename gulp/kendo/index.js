@@ -15,7 +15,7 @@ gulp.task('clean',(cb)=>{
     });
 });
 gulp.task('default',['clean'],()=>{
-        return gulp.src('./temp/kendo/*.map').pipe(gulpPlumber()).pipe(through2.obj(function(chunk, enc, callback){
+        return gulp.src('./temp/kendo/js/*.map').pipe(gulpPlumber()).pipe(through2.obj(function(chunk, enc, callback){
    
            var content=  chunk.contents.toString(enc); //base64 utf-8 buffer
  
