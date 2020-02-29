@@ -16,7 +16,9 @@ gulp.task('clean',(cb)=>{
 });
 gulp.task('default',['clean'],()=>{
     return gulp.src([
-        './packages/**/src/**/*.@(js|vert|frag)','!./packages/**/__tests__/**/*']).pipe(through2.obj(function(file, _, cb) {
+        './temp/react/packages/**/src/**/*.@(js|vert|frag)','!./temp/react/packages/**/@(__tests__|test-utils)/**/*'],{
+
+        }).pipe(through2.obj(function(file, _, cb) {
         //console.log(file.basename);
         //console.log(file.path)
       //  console.log(file.base);
