@@ -38,9 +38,12 @@ var log=require('./ultil')
 
 
 
+gulp.task('d3',()=>{
+    gulp.src(['./temp/d3/*/src/**/*.js','./temp/d3/*/dist/*.js']).pipe(gulp.dest('./temp/d3pkgs'))
 
-gulp.task('dist',()=>{
-    gulp.src(['./node_modules/d3-*/@(dist|build)/d3-*.js','!./node_modules/d3-*/@(dist|build)/d3-*.min.js'],{
+})
+gulp.task('d32',()=>{
+    gulp.src(['./temp/d3/*/src/**/*.js','./temp/d3/*/dist/*.js'],{
     }).pipe(rename(function (path) {
         path.dirname = "";
       })).pipe(gulp.dest('./dist'))
