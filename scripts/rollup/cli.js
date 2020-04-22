@@ -1,7 +1,7 @@
 // node scripts/rollup/cli rm 
 const {execSync,spawnSync}=require('../utils/process');
 const {getPackages}=require('../utils/packages');
-const {getFile,getFileSync,copyFileSync,rename}=require('../utils/util');
+const {getFile,template,getFileSync,writeFileSync,copyFileSync,rename}=require('../utils/util');
 const fs=require('fs');
 const path=require('path');
 const inquirer=require('inquirer');
@@ -23,7 +23,17 @@ program.parse(process.argv);
 function buildConfigFile(package){
     let pkgPath=path.resolve(__dirname,'../../packages',package);
     let tplPath=path.resolve(__dirname,'rollup.config.tpl');
-    copyFileSync(tplPath,path.join(pkgPath,'rollup.config.js'));
+    let tplContent=getFileSync(tplPath);
+    tplContent=tplContent.replace("{{CONFIG}}",JSON.stringify({
+        name:package,
+        inputOptions:{},
+        outputOptions:{
+
+        }
+    },null,2));
+    let writePath=path.join(pkgPath,'rollup.config.js');
+    console.log(tplContent)
+    writeFileSync(writePath,tplContent);
 }
 function init(){
 
@@ -52,8 +62,10 @@ function init(){
     });
 }
 function build(package){
-    let pkgPath=path.resolve(__dirname,'../../packages',package)
-    spawnSync('npx',['rollup','-c',path.join(pkgPath,'rollup.config.js')]);
+    let pkgPath=path.resolve(__dirname,'../../packages',package);
+  //  spawnSync('npx',['rollup','-c',path.join(pkgPath,'rollup.config.js')]);
+
+   spawnSync('node',['../../node_modules/rollup/dist/bin/rollup','-c',path.join(pkgPath,'rollup.config.js')])
 }
 function install(){
     let plugins=defaultPlugins.filter(name=>{

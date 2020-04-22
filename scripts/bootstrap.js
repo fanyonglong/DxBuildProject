@@ -39,7 +39,7 @@ function initPackage(shortName) {
             "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
             "build:cjs": "tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
             "build:umd": "tsc -p tsconfig.json --target ES5 --module UMD --outDir dist --outFile index.js",
-            "build:dist": `node ../../scripts/rollup/cli.js build ${shortName}`,
+            "build:dist": `node ../../node_modules/rollup/dist/bin/rollup -c rollup.config.js`,
             "clean": `node ../../scripts/del.js del ${shortName} lib esm`,
         },
         repository: {

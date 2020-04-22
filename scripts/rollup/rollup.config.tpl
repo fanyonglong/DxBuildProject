@@ -1,4 +1,3 @@
-import config from '../../scripts/rollup/rollup.common';
-export default {
-
-}
+import getConfig from '../../scripts/rollup/rollup.common';
+let config={{CONFIG}};
+export default getConfig(config)

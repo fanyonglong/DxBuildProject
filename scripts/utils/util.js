@@ -58,14 +58,70 @@ function rename2(path,options){
     var filePath=nodePath.resolve(options.dirname,options.basename+options.extname);
     return filePath;
 }
-function template(source,obj){  
-    return source.replace(/{{(.+?)}}/g,function(a,name){
-        if(obj[name]){
-            return obj[name];
+let template=(function template() {
+  
+    var invert = function (obj) {
+        var result = {};
+        for (var name in escapeMap) {
+            if (escapeMap.hasOwnProperty(name)) {
+                result[escapeMap[name]] = name;
+            }
         }
-        return a;
-    })
-}
+        return result;
+    }
+    // List of HTML entities for escaping.
+    var escapeMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        '`': '&#x60;'
+    };
+    var unescapeMap = invert(escapeMap);
+
+    // Functions for escaping and unescaping strings to/from HTML interpolation.
+    var createEscaper = function (map) {
+        var escaper = function (match) {
+            return map[match];
+        };
+        // Regexes for identifying a key that needs to be escaped
+        var source = '(?:' + Object.keys(map).join('|') + ')';
+        var testRegexp = RegExp(source);
+        var replaceRegexp = RegExp(source, 'g');
+        return function (string) {
+            string = string == null ? '' : '' + string;
+            return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+        };
+    };
+    var _util = {
+        escape: createEscaper(escapeMap),
+        unescape: createEscaper(unescapeMap)
+    }
+    var parseTemplate = function (str) {
+        var err = "";
+        try {
+            var func;
+                var strFunc =
+                "var p=[];with(obj){p.push('" +
+                str.replace(/[\r\t\n]/g, " ")
+                   .replace(/'(?=[^#]*#>)/g, "\t")
+                   .split("'").join("\\'")
+                   .split("\t").join("'")
+                   .replace(/<%=(.+?)%>/g, "',$1,'")
+                   .replace(/<%-(.+?)%>/g, "',_.escape($1),'")
+                   .split("<%").join("');")
+                   .split("%>").join("p.push('")
+                   + "');}return p.join('');";
+                func = new Function("obj",'_', strFunc);
+                return function (data) {
+                    return func.call(this, data, _util)
+                }
+        } catch (e) { err = e.message; }
+        return "< # ERROR: " + err.htmlEncode() + " # >";
+    }
+    return parseTemplate;
+ }());
 /**
  *获取文件内容
  * @param {*} path
@@ -132,10 +188,14 @@ function mkdirExists(path){
         fs.mkdirSync(dirname,{recursive:true});
     }
 }
-function writeFile(path,data,options={encoding:'utf8'}){
+function writeFileSync(path,data,options={}){
+    mkdirExists(path)
+    return fs.writeFileSync(path,data,{encoding:'utf8',...options})
+}
+function writeFile(path,data,options={}){
     mkdirExists(path)
     return new Promise((resolve,reject)=>{
-        fsp.writeFile(path,data,options,function(error){
+        fsp.writeFile(path,data,{encoding:'utf8',...options},function(error){
             if(error){
                 reject(error)
                 return;
@@ -202,6 +262,7 @@ fs.constants.COPYFILE_FICLONE_FORCE - 拷贝操作将尝试创建写时拷贝链
 function copyFileSync(src,dest,flags=0){
     return fs.copyFileSync(src,dest,flags)
 }
+exports.writeFileSync=writeFileSync;
 exports.copyFileSync=copyFileSync;
 exports.getFileSync=getFileSync;
 exports.getFile=getFile;

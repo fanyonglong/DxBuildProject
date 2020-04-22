@@ -4,6 +4,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-node-resolve": "^7.1.3",
+    "@rollup/plugin-typescript": "^4.1.1",
     "@types/lodash": "^4.14.150",
     "@types/node": "^13.13.1",
     "chalk": "^4.0.0",
@@ -27,7 +28,7 @@
     "lerna:build": "lerna run build",
     "lerna:link": "lerna link",
     "release": "node scripts/release.js",
-    "rollup:init":"node scripts/rollup/cli.js init",
+    "rollup:init": "node scripts/rollup/cli.js init",
     "build": "npm run build:lerna",
     "build:cjs": "node scripts/build.js cjs",
     "build:umd": "node scripts/build.js umd",
