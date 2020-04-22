@@ -1,0 +1,39 @@
+{
+  "name": "@dxyl/utils",
+  "version": "1.0.0",
+  "description": "@dxyl/utils",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
+    "build:cjs": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
+    "build:umd": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module UMD --outDir dist",
+    "build:dist": "rollup -c rollup.config.js",
+    "clean":"node ../../scripts/del.js del utils lib esm"
+  },
+  "files": [
+    "lib",
+    "src",
+    "esm",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanyonglong/DxBuildProject.git"
+  },
+  "keywords": [
+    "DxBuildProject"
+  ],
+  "authors": [
+    "fanyonglong"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/fanyonglong/DxBuildProject/issues",
+  "homepage": "https://github.com/fanyonglong/DxBuildProject/tree/master/packages/utils#readme",
+  "peerDependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {}
+}

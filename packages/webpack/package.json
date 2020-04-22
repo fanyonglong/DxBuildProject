@@ -1,0 +1,27 @@
+{
+  "name": "@dxyl/webpack",
+  "version": "1.0.0",
+  "description": "@dxyl/webpack",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanyonglong/DxBuildProject.git"
+  },
+  "keywords": [
+    "DxBuildProject"
+  ],
+  "authors": [
+    "fanyonglong"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/fanyonglong/DxBuildProject/issues",
+  "homepage": "https://github.com/fanyonglong/DxBuildProject/tree/master/packages/webpack#readme",
+  "devDependencies": {
+    "commander": "^5.0.0"
+  }
+}

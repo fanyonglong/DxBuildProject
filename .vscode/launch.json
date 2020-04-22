@@ -7,6 +7,17 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "rollup Program",
+            "program": "${workspaceFolder}/scripts/rollup/cli.js",
+            "args": ["init"],
+            "autoAttachChildProcesses": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Gulp task",
             "program": "C:/Program Files/nodejs/node_global/node_modules/gulp/bin/gulp.js",
             "args": ["--task=kendo"]
