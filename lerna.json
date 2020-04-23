@@ -6,9 +6,8 @@
   "command": {
     "bootstrap": {
       "ci": false,
-      "npmClientArgs": [
-        "--no-package-lock"
-      ]
+      "npmClient":"yarn",
+      "npmClientArgs": []
     },
     "publish": {
       "commitHooks": false

@@ -11,15 +11,18 @@ const root=path.resolve(__dirname,'../../node_modules');
 //https://github.com/rollup/plugins/
 const defaultPlugins=[
     '@rollup/plugin-node-resolve',
-    '@rollup/plugin-commonjs'
+    '@rollup/plugin-commonjs',
+    '@rollup/plugin-typescript',
+    'rollup-plugin-terser'
 ];
 const {program}=require('commander');
 program.command('init').action(init)
 program.command('build <package>').action(build)
-program.command('i').action(install);
+program.command('i').action(install);// 
 program.command('rm').action(uninstall);
 program.parse(process.argv);
 
+// 生成 rollup.config.js配置文件
 function buildConfigFile(package){
     let pkgPath=path.resolve(__dirname,'../../packages',package);
     let tplPath=path.resolve(__dirname,'rollup.config.tpl');

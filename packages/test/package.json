@@ -1,0 +1,37 @@
+{
+  "name": "@dxyl/test",
+  "version": "1.0.0",
+  "description": "@dxyl/test",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "esm/index.js",
+  "files": [
+    "lib",
+    "src",
+    "esm",
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
+    "build:cjs": "tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
+    "build:umd": "tsc -p tsconfig.json --target ES5 --module UMD --outDir dist --outFile index.js",
+    "build:dist": "node ../../node_modules/rollup/dist/bin/rollup -c rollup.config.js",
+    "clean": "node ../../scripts/del.js del test lib esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanyonglong/DxBuildProject.git"
+  },
+  "keywords": [
+    "DxBuildProject",
+    "test"
+  ],
+  "authors": [
+    "fanyonglong"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/fanyonglong/DxBuildProject/issues",
+  "homepage": "https://github.com/fanyonglong/DxBuildProject/tree/master/packages/test#readme",
+  "dependencies": {}
+}

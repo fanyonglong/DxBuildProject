@@ -15,7 +15,6 @@ program.command('init [package]').description('初始化').action(init);
 
 program.parse(process.argv);
 
-const version = require('../lerna.json').version;
 /**
  * 生成包初始文件
  */
@@ -23,6 +22,8 @@ function buildPackageInitFile() {
     console.log('init', program.force)
 }
 function initPackage(shortName) {
+    
+    const version ="1.0.0";
     let name = '@dxyl/' + shortName;
     let packageJsonPath = nodePath.join(__dirname, '../packages', shortName, 'package.json');
     let packageJson = {
@@ -35,7 +36,7 @@ function initPackage(shortName) {
         //  typings:"",
         files: ['lib', 'src','esm','dist'],
         scripts: {
-            "build": "npm run clean && npm build:esm && npm build:cjs",
+            "build": "npm run clean && npm run build:esm && npm run build:cjs",
             "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
             "build:cjs": "tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
             "build:umd": "tsc -p tsconfig.json --target ES5 --module UMD --outDir dist --outFile index.js",
@@ -57,7 +58,6 @@ function initPackage(shortName) {
     }
     // 创建 package.json
     if (program.force || !fs.existsSync(packageJsonPath)) {
-        require.
          writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
     }
     // 创建readme.md
@@ -81,6 +81,7 @@ function initPackage(shortName) {
     }
     // 生成rollup
 }
+// 初始包默认配置
 function init(package) {
 
     let pkgs = package&&typeof package=='string'?[package]:getPackages();

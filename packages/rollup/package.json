@@ -3,10 +3,19 @@
   "version": "1.0.0",
   "description": "@dxyl/rollup",
   "main": "lib/index.js",
+  "module": "esm/index.js",
   "types": "lib/index.d.ts",
+  "bin": "bin/cli",
+  "scripts": {
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
+    "build:cjs": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
+    "clean": "node ../../scripts/del.js del rollup lib esm"
+  },
   "files": [
     "lib",
-    "src"
+    "src",
+    "esm"
   ],
   "repository": {
     "type": "git",

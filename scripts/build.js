@@ -22,6 +22,7 @@ program.parse(process.argv);
 async function buildAll(){
     
 }
+// 执行lerna run build命令，运行所有包的代码打包程序
 async function lernaBuild(){
   //  console.log(process.execPath);
 //   var pkgs=getPackages();
@@ -35,7 +36,7 @@ async function lernaBuild(){
   execSync('npm run lerna:build');
   console.log(chalk.green('生成完成'))
 }
-
+// 利用typescript tsc cli 执行.ts文件转换
 async function typescriptBuild(){
        
     console.log(chalk.blue('开始生成'))

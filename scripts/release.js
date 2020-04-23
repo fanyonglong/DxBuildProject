@@ -3,9 +3,11 @@ const { execSync, spawnSync, spawn } = require('./utils/process');
 const lernaCli = require.resolve('lerna/cli');
 const chalk = require('chalk');
 
+// npm发布
 function npmNavtivePublish() {
     execSync('npm publish --access=public');
 }
+// lerna发布
 async function publish() {
     console.log(chalk.green('开始发布'))
     try {
