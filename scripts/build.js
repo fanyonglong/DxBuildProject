@@ -36,31 +36,6 @@ async function lernaBuild(){
   console.log(chalk.green('生成完成'))
 }
 
-async function startRollupBuild(configPath){
-    let config=require(configPath);
-    const inputOptions ={
-        ...config.inputOptions
-    }
-    const outputOptions={
-        ...config.outputOptions
-    };
-
-    const bundle = await rollup.rollup(inputOptions);
-    // or write the bundle to disk
-    await bundle.write(outputOptions);
-}
-async function rollupBuild(configPath){
-
-    console.log(chalk.blue('开始生成'))
-    var pkgs=['utils'];
-    var bar = new ProgressBar(':bar :current/:total', { total: pkgs.length,clear :false });
-    pkgs.forEach(async function(shortName){
-        let pkgPath=nodePath.join(__dirname,'..','packages',shortName);
-        del.sync([nodePath.join(pkgPath,'dist')]);
-
-    });
-}
-
 async function typescriptBuild(){
        
     console.log(chalk.blue('开始生成'))

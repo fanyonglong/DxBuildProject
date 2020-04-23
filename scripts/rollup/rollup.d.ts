@@ -455,14 +455,14 @@ export interface InputOptions {
     //Object 以前生成的包。使用它来加速后续的构建——Rollup只会重新分析已经更改的模块。
 	cache?: false | RollupCache;
 	context?: string;//默认情况下，模块的上下文 - 即顶级的this的值为undefined。在极少数情况下，您可能需要将其更改为其他内容，如 'window'。
-	experimentalCacheExpiry?: number;
+	experimentalCacheExpiry?: number;//确定在运行了多少次后不再应使用插件的缓存资产。
 	external?: ExternalOption;
-	inlineDynamicImports?: boolean;
+	inlineDynamicImports?: boolean;//这将内联动态导入，而不是创建新的块来创建单个包。仅当提供单个输入时才可能。
 	input?: InputOption;//String 这个包的入口点 (例如：你的 main.js 或者 app.js 或者 index.js)
-	manualChunks?: ManualChunksOption;
+	manualChunks?: ManualChunksOption;//允许创建自定义共享公共块。当使用对象形式时，每个属性代表一个块，该块包含列出的模块及其所有依赖关系（如果它们是模块图的一部分），除非它们已经在另一个手动块中。块的名称将由属性键确定。
 	moduleContext?: ((id: string) => string) | { [id: string]: string };//和options.context一样，但是每个模块可以是id: context对的对象，也可以是id => context函数。
 	onwarn?: WarningHandlerWithDefault;//Function 将拦截警告信息。如果没有提供，警告将被复制并打印到控制台。
-	perf?: boolean;
+	perf?: boolean;//是否收集性能计时
 	plugins?: Plugin[];
 	preserveEntrySignatures?: PreserveEntrySignaturesOption;
 	preserveModules?: boolean;
@@ -473,6 +473,14 @@ export interface InputOptions {
 	watch?: WatcherOptions;
 }
 
+/*
+amd –异步模块定义，与RequireJS等模块加载器一起使用
+cjs- CommonJS的，适用于节点和其他捆扎机（别名：commonjs）
+es–将捆绑软件保留为ES模块文件，适用于其他捆绑软件，并作为<script type=module>标签包含在现代浏览器中（别名：esm，module）
+iife–一种自执行功能，适合作为<script>标记包含在内。（如果要为应用程序创建捆绑包，则可能要使用它。）
+umd-通用模块定义，工作方式amd，cjs以及iife所有在一个
+system-在SystemJS装载机的原生格式（别名：systemjs）
+*/
 export type InternalModuleFormat = 'amd' | 'cjs' | 'es' | 'iife' | 'system' | 'umd';
 
 export type ModuleFormat = InternalModuleFormat | 'commonjs' | 'esm' | 'module' | 'systemjs';
@@ -486,34 +494,69 @@ export interface OutputOptions {
 	};
     assetFileNames?: string;
 	banner?: string | (() => string | Promise<string>);    //String 字符串以 前置/追加 到文件束(bundle)。(注意:“banner”和“footer”选项不会破坏sourcemaps)
+	/**
+	 * output.chunkFileNames
+	类型：string
+	CLI：--chunkFileNames <pattern>
+	默认："[name]-[hash].js"
+	用于命名代码拆分时创建的共享块的模式。模式支持以下占位符：
+	[format]：在输出选项中定义的渲染格式，例如es或cjs。
+	[hash]：基于块的内容及其所有依赖项的内容的哈希。
+	[name]：块的名称。这可以通过manualChunks选项显式设置，也可以通过插件通过创建块来进行设置this.emitFile。否则，它将从块内容派生。
+	正斜杠/可用于将文件放置在子目录中。又见output.assetFileNames，output.entryFileNames。
+	*/
 	chunkFileNames?: string;
-	compact?: boolean;
+	compact?: boolean;//这将最小化由汇总生成的包装器代码。请注意，这不会影响用户编写的代码。捆绑预缩小的代码时，此选项很有用。
 	// only required for bundle.write
-	dir?: string;
+	dir?: string;//所有生成的块所在的目录。如果生成多个块，则需要此选项。否则，file可以使用该选项。
 	/** @deprecated Use the "renderDynamicImport" plugin hook instead. */
 	dynamicImportFunction?: string;
+	/**
+	 * output.entryFileNames
+	类型：string
+	CLI：--entryFileNames <pattern>
+	默认："[name].js"
+	用于从入口点创建的块的模式。模式支持以下占位符：
+	[format]：在输出选项中定义的渲染格式，例如es或cjs。
+	[hash]：基于入口点的内容及其所有依赖项的内容的哈希。
+	[name]：入口点的文件名（不带扩展名），除非使用输入的对象形式定义了另一个名称。
+	正斜杠/可用于将文件放置在子目录中。又见output.assetFileNames，output.chunkFileNames。
+	使用该preserveModules选项时也将使用此模式。不过，这里有一组不同的占位符：
+	[format]：在输出选项中定义的呈现格式。
+	[name]：文件的文件名（不带扩展名）。
+	[ext]：文件的扩展名。
+	[extname]：文件扩展名，.如果不为空则以前缀。
+	输出扩展
+	*/
 	entryFileNames?: string;
-	esModule?: boolean;
+	esModule?: boolean;//_esModule: true为非ES格式生成导出时是否添加属性。
+	/*
+	使用哪种导出模式。默认为auto，根据input模块导出的内容猜测您的意图：
+	default –如果仅使用导出一件事，则适用 export default ...
+	named –如果您要出口一件以上的东西，则适合
+	none –适用于不导出任何内容的情况（例如，您正在构建应用程序而不是库）
+	default和之间的差异named会影响其他人如何消费您的捆绑包。如果使用default，则CommonJS用户可以执行此操作，例如：
+	*/
 	exports?: 'default' | 'named' | 'none' | 'auto';
-	extend?: boolean;
+	extend?: boolean;//是否扩展name选项以umd或iife格式定义的全局变量。何时true，全局变量将定义为(global.name = global.name || {})。如果为false，则由定义的全局变量name将被覆盖(global.name = {})。
 	externalLiveBindings?: boolean;
 	// only required for bundle.write
 	file?: string;
 	footer?: string | (() => string | Promise<string>);
 	format?: ModuleFormat;
 	freeze?: boolean;
-	globals?: GlobalsOption;
+	globals?: GlobalsOption;//id: variableName在umd/ iife包中指定外部导入所需的对。例如，在这种情况下...
 	hoistTransitiveImports?: boolean;
 	indent?: boolean;
     interop?: boolean;//Boolean 是否添加'interop块'。默认情况下（interop：true），为了安全起见，如果需要区分默认和命名导出，则Rollup会将任何外部依赖项“default”导出到一个单独的变量。这通常只适用于您的外部依赖关系（例如与Babel）（如果您确定不需要它），则可以使用“interop：false”来节省几个字节。  
 	intro?: string | (() => string | Promise<string>);//String类似于 banner和footer，除了代码在内部任何特定格式的包装器(wrapper)
 	minifyInternalExports?: boolean;
-	name?: string;
+	name?: string;// 使用umd或iife
 	namespaceToStringTag?: boolean;
 	noConflict?: boolean;
 	outro?: string | (() => string | Promise<string>);
-	paths?: OptionsPaths;
-	plugins?: OutputPlugin[];
+	paths?: OptionsPaths;// 路径映射
+	plugins?: OutputPlugin[];// 输出插件，使用于某个输出的插件
 	preferConst?: boolean;
 	sourcemap?: boolean | 'inline' | 'hidden';//如果 true，将创建一个单独的sourcemap文件。如果 inline，sourcemap将作为数据URI附加到生成的output文
 	sourcemapExcludeSources?: boolean;

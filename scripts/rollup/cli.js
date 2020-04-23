@@ -63,7 +63,7 @@ function init(){
 }
 function build(package){
     let pkgPath=path.resolve(__dirname,'../../packages',package);
-  //  spawnSync('npx',['rollup','-c',path.join(pkgPath,'rollup.config.js')]);
+  //  spawnSync('npx',['rollup','--environment',['NODE_ENV:production'].join(','),'-c',path.join(pkgPath,'rollup.config.js')]);
 
    spawnSync('node',['../../node_modules/rollup/dist/bin/rollup','-c',path.join(pkgPath,'rollup.config.js')])
 }

@@ -15,7 +15,13 @@ const event=require('events');
  * @property {buffer} stdout  - output[1] 的内容。
 */
 
-function wrapProcess(child){
+function wrapProcess(child,pipe){
+    if(pipe){
+        return Promise.resolve(child).then(pipe).then(watchProcess.bind(null,child));
+    }
+    return watchProcess(child);
+}
+function watchProcess(child){
     return new Promise((resolve,reject)=>{
         child.on('close',function close(code,signal){
             if (code === 1) {
@@ -36,11 +42,11 @@ function wrapProcess(child){
  * @param {object} [options] 
  * @param {function} [callback] 
  */
-function exec(command, options={}, callback) {
+function exec(command, options={}, callback,pipe) {
     let child= child_process.exec(command,{
         ...options
     },callback);   
-    return wrapProcess(child)
+    return wrapProcess(child,pipe)
 }
 /**
  * child_process.execFile() 函数类似于 child_process.exec()，但默认情况下不会衍生 shell。 相反，指定的可执行文件 file 会作为新进程直接地衍生，使其比 child_process.exec() 稍微更高效。
@@ -50,11 +56,11 @@ function exec(command, options={}, callback) {
  * @param {object} [options] 
  * @param {function} [callback] 
  */
-function execFile(file,args=[], options={}, callback) {
+function execFile(file,args=[], options={}, callback,pipe) {
     let child= child_process.execFile(file,args,{
         ...options
     },callback);   
-    return wrapProcess(child)
+    return wrapProcess(child,pipe)
 }
 /**
  *child_process.spawn() 方法使用给定的 command 衍生一个新进程，并带上 args 中的命令行参数。 如果省略 args，则其默认为一个空数组。
@@ -63,12 +69,12 @@ function execFile(file,args=[], options={}, callback) {
  * @param {string[]} [args=[]]
  * @param {object} [options={}]
 */
-function spawn(commdand,args=[],options={}){
+function spawn(commdand,args=[],options={},pipe){
     let child= child_process.spawn(commdand,args,{
         stdio:"inherit",
         ...options
     });   
-    return wrapProcess(child)
+    return wrapProcess(child,pipe)
 }
 /**
  * child_process.fork() 方法是 child_process.spawn() 的一个特例，专门用于衍生新的 Node.js 进程。 与 child_process.spawn() 一样返回 ChildProcess 对象。 返回的 ChildProcess 将会内置一个额外的通信通道，允许消息在父进程和子进程之间来回传递。 详见 subprocess.send()。
@@ -78,12 +84,13 @@ function spawn(commdand,args=[],options={}){
  * @param {string[]} [args=[]] 字符串参数的列表。
  * @param {object} [options=[]] 
  */
-function fork(modulePath,args=[],options={}){
+function fork(modulePath,args=[],options={},pipe){
     let child= child_process.fork(modulePath,args,{
         stdio:"inherit",
         ...options
     });   
-    return wrapProcess(child)
+
+    return wrapProcess(child,pipe)
 }
 
 /**

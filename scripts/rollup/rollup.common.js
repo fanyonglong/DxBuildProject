@@ -2,25 +2,37 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import terser from 'rollup-plugin-terser';
 import {camelCase} from 'lodash';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 export default function getConfig(options={}){
     let {name,inputOptions={},outputOptions={}}=options;
     const defaultConfig={
         input: 'src/index.ts',
-        output: {
-         // dir:"dist",
-          file: 'dist/index.js',
-          format: 'umd',
-          name:"Dx."+name,
-          banner:'/*@desc '+name+' */',
-         // intro:"window.Dx=window.Dx||(window.Dx={})",
-          exports:"named",
-          globals:{
-            lodash:"_"
-          },
-          ...outputOptions
-        },
+        output:[{
+          // dir:"dist",
+           file: 'dist/umd/index.js',
+           format: 'umd',
+           name:"Dx."+name,
+           banner:'/*@desc '+name+' */',
+          // intro:"window.Dx=window.Dx||(window.Dx={})",
+           exports:"named",
+           globals:{
+             lodash:"_"
+           },
+           ...outputOptions
+         },{
+           //dir:"dist",
+          // dir: 'dist/cjs',
+           file: 'dist/cjs/index.js',
+           format: 'cjs',
+           banner:'/*@desc '+name+' */',
+          // intro:"window.Dx=window.Dx||(window.Dx={})",
+           exports:"named",
+           ...outputOptions
+         }],
         // 指出应将哪些模块视为外部模块
         external: ['lodash'],
         plugins: [
@@ -36,7 +48,9 @@ export default function getConfig(options={}){
           customResolveOptions: {
             moduleDirectory: 'node_modules'
           }
-        }),commonjs({extensions: ['.js', '.ts']})].concat(inputOptions.plugins||[]),
+        }),commonjs({extensions: ['.js', '.ts']}),
+        terser()
+      ].concat(inputOptions.plugins||[]),
         ...inputOptions,
       
     };

@@ -7,6 +7,15 @@ const stream=require('stream');
 const zlib = require('zlib');
 const {getDirAllFiles,rename}=require('./utils/util');
 const {getPackages}=require('./utils/packages');
+const nodePath=require('path');
+
+function writeFile(path){
+    var write=fs.createWriteStream(path,{
+
+    })
+
+}
+
 
 
 /**
@@ -29,7 +38,32 @@ function init(){
         }
     });
 }
-
+function readFileStream2(){
+    return new Promise(function(resolve,reject){
+     // 默认暂停模式
+     let readStream=fs.createReadStream(nodePath.resolve(__dirname,'../package.json'),{
+         encoding:"utf8" // 把数据以字符串返回
+     });
+     let result='';
+     // 当有数据可从流中读取时，就会触发 'readable' 事件。
+     // 在某些情况下，为 'readable' 事件附加监听器将会导致将一些数据读入内部缓冲区。
+     readStream.on('readable',function(){
+        // 有数据可读取。
+        let data;
+        while (data = this.read()) {
+            console.log(data);
+        }
+    })
+     readStream.on('end',function(){
+         resolve(result);
+     });
+     readStream.on('error',function(){
+         reject();
+     });
+    // readStream.read();
+    })
+ }
+ 
 /*
 在 Node.js 中有四种基本的流类型：
 Readable（可读流），

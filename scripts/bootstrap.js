@@ -33,7 +33,7 @@ function initPackage(shortName) {
         types: 'lib/index.d.ts',
         module: "esm/index.js",
         //  typings:"",
-        files: ['lib', 'src'],
+        files: ['lib', 'src','esm','dist'],
         scripts: {
             "build": "npm run clean && npm build:esm && npm build:cjs",
             "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
@@ -57,6 +57,7 @@ function initPackage(shortName) {
     }
     // 创建 package.json
     if (program.force || !fs.existsSync(packageJsonPath)) {
+        require.
          writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
     }
     // 创建readme.md

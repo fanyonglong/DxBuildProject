@@ -262,6 +262,46 @@ fs.constants.COPYFILE_FICLONE_FORCE - 拷贝操作将尝试创建写时拷贝链
 function copyFileSync(src,dest,flags=0){
     return fs.copyFileSync(src,dest,flags)
 }
+
+// 当 flag 选项采用字符串时，可用以下标志：
+var flags={
+'a'  :'a'  ,   //- 打开文件用于追加。如果文件不存在，则创建该文件。
+'ax' :'ax' ,   //- 与 'a' 相似，但如果路径已存在则失败。
+'a+' :'a+' ,   //- 打开文件用于读取和追加。如果文件不存在，则创建该文件。
+'ax+':'ax+',   //- 与 'a+' 相似，但如果路径已存在则失败。
+'as' :'as' ,   //- 以同步模式打开文件用于追加。如果文件不存在，则创建该文件。
+'as+':'as+',   //- 以同步模式打开文件用于读取和追加。如果文件不存在，则创建该文件。
+'r'  :'r'  ,   //- 打开文件用于读取。如果文件不存在，则出现异常。
+'r+' :'r+' ,   //- 打开文件用于读取和写入。如果文件不存在，则出现异常。
+'rs+':'rs+',   //- 以同步模式打开文件用于读取和写入。指示操作系统绕过本地的文件系统缓存。
+        //    这对于在 NFS 挂载上打开文件时非常有用，因为它允许跳过可能过时的本地缓存。 它对 I/O 性能有非常实际的影响，因此除非需要，否则不建议使用此标志。
+        //    这不会将 fs.open() 或 fsPromises.open() 转换为同步的阻塞调用。 如果需要同步的操作，则应使用 fs.openSync() 之类的。
+'w'  :'w'  ,   //- 打开文件用于写入。如果文件不存在则创建文件，如果文件已存在则截断文件。
+'wx' :'wx' ,   //- 与 'w' 相似，但如果路径已存在则失败。
+'w+' :'w+' ,   //- 打开文件用于读取和写入。如果文件不存在则创建文件，如果文件已存在则截断文件。
+'wx+':'wx+',   //- 与 'w+' 相似，但如果路径已存在则失败。
+}
+/**
+ * 
+ * @param {string} path 
+ * @param {object} options 
+ * 如果 autoClose 设置为 true（默认的行为），
+ * 则在 'error' 或 'finish' 事件时文件描述符将会被自动地关闭。
+ *  如果 autoClose 为 false，则即使出现错误，文件描述符也不会被关闭。 应用程序负责关闭它并确保没有文件描述符泄漏。
+ *  flags <string> 参阅支持的文件系统标志。默认值: 'w'。
+    encoding <string> 默认值: 'utf8'。
+    fd <integer> 默认值: null。
+    mode <integer> 默认值: 0o666。
+    autoClose <boolean> 默认值: true。
+    emitClose <boolean> 默认值: false。
+    start <integer>
+    fs <Object> | <null> 默认值: null。
+ */
+function createWriteStream(path,options={}){
+    return fs.createWriteStream(path,options);
+}
+
+
 exports.writeFileSync=writeFileSync;
 exports.copyFileSync=copyFileSync;
 exports.getFileSync=getFileSync;
