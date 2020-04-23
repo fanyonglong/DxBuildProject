@@ -32,7 +32,7 @@
     "lerna:publish": "lerna publish",
     "lerna:publish-beta": "npm run pre-publish && lerna publish --dist-tag beta",
     "lerna:bootstrap": "lerna bootstrap",
-    "lerna:build": "lerna run build",
+    "lerna:build": "lerna run --ignore test build",
     "lerna:link": "lerna link",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write './packages/**/*.{js,jsx,tsx,ts,less,md,json}'",
@@ -41,11 +41,11 @@
     "build": "npm run build:lerna",
     "build:cjs": "node scripts/build.js cjs",
     "build:umd": "node scripts/build.js umd",
-    "build:lerna": "node scripts/build.js lerna"
+    "build:lerna": "node scripts/build.js lerna",
+    "test": "jest"
   },
   "husky": {
-    "hooks": {
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
