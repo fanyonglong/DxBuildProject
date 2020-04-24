@@ -39,8 +39,9 @@ function initPackage(shortName) {
             "build": "npm run clean && npm run build:esm && npm run build:cjs",
             "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
             "build:cjs": "tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
-            "build:umd": "tsc -p tsconfig.json --target ES5 --module UMD --outDir dist --outFile index.js",
+            //"build:umd": "tsc -p tsconfig.json --target ES5 --module UMD --outDir dist --outFile index.js",
             "build:dist": `node ../../node_modules/rollup/dist/bin/rollup -c rollup.config.js`,
+            "watch:cjs": `tsc -p tsconfig.json --watch --target ES5 --module CommonJS --outDir lib`,
             "clean": `node ../../scripts/del.js del ${shortName} lib esm`,
         },
         repository: {
@@ -69,8 +70,8 @@ function initPackage(shortName) {
     let tsconfigJson = {
         "extends": "../../tsconfig.json",
         "compilerOptions": {
-            "baseUrl": "./",
-            "outDir": "lib",
+            "rootDir": "./src",
+            "outDir": "./lib",
         },
         "include": ["src"]
     }
@@ -79,7 +80,8 @@ function initPackage(shortName) {
     if (!fs.existsSync(tsconfigPath)) {
          writeFile(tsconfigPath, JSON.stringify(tsconfigJson, null, 2))
     }
-    // 生成rollup
+    // rollup
+    
 }
 // 初始包默认配置
 function init(package) {

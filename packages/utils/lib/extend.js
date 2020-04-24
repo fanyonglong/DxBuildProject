@@ -3,4 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function extend() {
     return 'f';
 }
-exports.default = extend;
+exports.extend = extend;
+function getDef() {
+    return 'd';
+}
+exports.default = getDef;

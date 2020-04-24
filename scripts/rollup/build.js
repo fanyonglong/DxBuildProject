@@ -1,5 +1,4 @@
 const rollup = require('rollup');
-const plugins = require('./plugins');
 
 async function build(inputOptions={},outputOptions={}) {
     // create a bundle

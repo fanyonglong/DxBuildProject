@@ -12,6 +12,7 @@
     "build:cjs": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
     "build:umd": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module UMD --outDir dist",
     "build:dist": "node ../../node_modules/rollup/dist/bin/rollup  -c rollup.config.js",
+    "watch:cjs": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --watch --target ES5 --module CommonJS --outDir lib",
     "clean": "node ../../scripts/del.js del utils lib esm"
   },
   "files": [
