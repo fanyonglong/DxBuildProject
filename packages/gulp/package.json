@@ -1,0 +1,55 @@
+{
+  "name": "@dxyl/gulp",
+  "version": "1.0.0",
+  "description": "@dxyl/gulp",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "esm/index.js",
+  "bin": {
+    "dxyl-gulp": "bin/cli.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "esm",
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
+    "build:cjs": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
+    "build:dist": "node ../../node_modules/.bin/rollup -c rollup.config.js",
+    "watch:cjs": "tsc -p tsconfig.json --watch --target ES5 --module CommonJS --outDir lib",
+    "clean": "node ../../scripts/del.js del gulp lib esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanyonglong/DxBuildProject.git"
+  },
+  "keywords": [
+    "DxBuildProject",
+    "gulp"
+  ],
+  "authors": [
+    "fanyonglong"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/fanyonglong/DxBuildProject/issues",
+  "homepage": "https://github.com/fanyonglong/DxBuildProject/tree/master/packages/gulp#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "buildConfig": {
+    "formats": [
+      "esm",
+      "cjs"
+    ]
+  },
+  "devDependencies": {
+    "chalk": "^4.0.0",
+    "glob": "^7.1.6",
+    "gulp": "^4.0.2",
+    "through2": "^3.0.1",
+    "yargs-parser": "^18.1.3"
+  }
+}

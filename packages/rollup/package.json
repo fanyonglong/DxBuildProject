@@ -1,0 +1,50 @@
+{
+  "name": "@dxyl/rollup",
+  "version": "1.0.0",
+  "description": "@dxyl/rollup",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "esm/index.js",
+  "files": [
+    "lib",
+    "src",
+    "esm",
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
+    "build:cjs": "tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
+    "build:dist": "node ../../node_modules/.bin/rollup -c rollup.config.js",
+    "watch:cjs": "tsc -p tsconfig.json --watch --target ES5 --module CommonJS --outDir lib",
+    "clean": "node ../../scripts/del.js del rollup lib esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanyonglong/DxBuildProject.git"
+  },
+  "keywords": [
+    "DxBuildProject",
+    "rollup"
+  ],
+  "authors": [
+    "fanyonglong"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/fanyonglong/DxBuildProject/issues",
+  "homepage": "https://github.com/fanyonglong/DxBuildProject/tree/master/packages/rollup#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "buildConfig": {
+    "formats": [
+      "esm",
+      "cjs"
+    ]
+  },
+  "devDependencies": {
+    "liftoff": "^3.1.0",
+    "lodash": "^4.17.15",
+    "rollup": "^2.7.6"
+  }
+}

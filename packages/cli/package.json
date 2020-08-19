@@ -1,0 +1,51 @@
+{
+  "name": "@dxyl/cli",
+  "version": "1.0.0",
+  "description": "@dxyl/cli",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "esm/index.js",
+  "bin": {
+    "dxyl":"bin/cli.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "esm",
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
+    "build:cjs": "tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
+    "build:dist": "node ../../node_modules/.bin/rollup -c rollup.config.js",
+    "watch:cjs": "tsc -p tsconfig.json --watch --target ES5 --module CommonJS --outDir lib",
+    "clean": "node ../../scripts/del.js del cli lib esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanyonglong/DxBuildProject.git"
+  },
+  "keywords": [
+    "DxBuildProject",
+    "cli"
+  ],
+  "authors": [
+    "fanyonglong"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/fanyonglong/DxBuildProject/issues",
+  "homepage": "https://github.com/fanyonglong/DxBuildProject/tree/master/packages/cli#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "buildConfig": {
+    "formats": [
+      "esm",
+      "cjs"
+    ]
+  },
+  "devDependencies": {
+    "yargs-parser": "^18.1.3"
+  }
+}

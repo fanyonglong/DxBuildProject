@@ -37,10 +37,10 @@ function initPackage(shortName) {
         files: ['lib', 'src','esm','dist'],
         scripts: {
             "build": "npm run clean && npm run build:esm && npm run build:cjs",
-            "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
-            "build:cjs": "tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
+            "build:esm": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
+            "build:cjs": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
             //"build:umd": "tsc -p tsconfig.json --target ES5 --module UMD --outDir dist --outFile index.js",
-            "build:dist": `node ../../node_modules/rollup/dist/bin/rollup -c rollup.config.js`,
+            "build:dist": `node ../../node_modules/rollup/bin/rollup -c rollup.config.js`,
             "watch:cjs": `tsc -p tsconfig.json --watch --target ES5 --module CommonJS --outDir lib`,
             "clean": `node ../../scripts/del.js del ${shortName} lib esm`,
         },
@@ -53,9 +53,12 @@ function initPackage(shortName) {
         license: 'MIT',
         bugs: 'http://github.com/fanyonglong/DxBuildProject/issues',
         homepage: `https://github.com/fanyonglong/DxBuildProject/tree/master/packages/${shortName}#readme`,
-        // publishConfig: {
-        //   access: 'public',
-        // },
+        publishConfig: {
+          access: 'public',
+        },
+        buildConfig:{
+            formats:['esm','cjs']
+        }
     }
     // 创建 package.json
     if (program.force || !fs.existsSync(packageJsonPath)) {

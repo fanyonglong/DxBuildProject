@@ -1,5 +1,5 @@
 {
-  "exclude": ["node_modules", "lib", "__tests__"],
+  "exclude": ["node_modules","esm", "lib", "__tests__"],
   "files": [],
   "compilerOptions": {
     "skipLibCheck": true,
@@ -20,7 +20,7 @@
     "declaration": true
   },
   "references": [
-    { "path": "packages/project" },
-    { "path": "packages/project2" },
+   
+    { "path": "packages/gulp" },
   ]
 }

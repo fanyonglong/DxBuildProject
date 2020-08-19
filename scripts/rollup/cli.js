@@ -6,7 +6,8 @@ const fs=require('fs');
 const path=require('path');
 const inquirer=require('inquirer');
 const root=path.resolve(__dirname,'../../node_modules');
-
+const runBuild=require('./build');
+const runDev=require('./dev');
 
 //https://github.com/rollup/plugins/
 const defaultPlugins=[
@@ -16,8 +17,8 @@ const defaultPlugins=[
     'rollup-plugin-terser'
 ];
 const {program}=require('commander');
-program.command('init').action(init)
-program.command('build <package>').action(build)
+program.command('init').action(init);
+program.command('build <package>').action(build);
 program.command('i').action(install);// 
 program.command('rm').action(uninstall);
 program.parse(process.argv);

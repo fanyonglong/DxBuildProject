@@ -15,8 +15,7 @@
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
     "build:cjs": "tsc -p tsconfig.json --target ES5 --module CommonJS --outDir lib",
-    "build:umd": "tsc -p tsconfig.json --target ES5 --module UMD --outDir dist --outFile index.js",
-    "build:dist": "node ../../node_modules/rollup/dist/bin/rollup -c rollup.config.js",
+    "build:dist": "node ../../node_modules/.bin/rollup -c rollup.config.js",
     "watch:cjs": "tsc -p tsconfig.json --watch --target ES5 --module CommonJS --outDir lib",
     "clean": "node ../../scripts/del.js del core lib esm"
   },
@@ -34,7 +33,19 @@
   "license": "MIT",
   "bugs": "http://github.com/fanyonglong/DxBuildProject/issues",
   "homepage": "https://github.com/fanyonglong/DxBuildProject/tree/master/packages/core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "buildConfig": {
+    "formats": [
+      "esm",
+      "cjs"
+    ]
+  },
   "devDependencies": {
+    "chalk": "^4.0.0",
+    "enhanced-resolve": "^4.1.1",
+    "lodash": "^4.17.15",
     "tapable": "^1.1.3"
   }
 }

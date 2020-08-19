@@ -1,6 +1,6 @@
 {
   "packages": [
-    "packages/utils"
+    "packages/umi"
   ],
   "version": "independent",
   "command": {
